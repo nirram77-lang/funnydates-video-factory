@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 FunnyDates Video Factory</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            font-size: 2.2em;
+            background: linear-gradient(90deg, #ff6b35, #f7931e, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header p { color: #888; margin-top: 5px; }
+        .version-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+        
+        /* Control Panel */
+        .control-panel {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 900px;
+            text-align: center;
+        }
+        .control-panel h2 { color: #ffd700; margin-bottom: 15px; }
+        
+        .config-section {
+            background: #0a0a0a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .config-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        .config-group {
+            flex: 1;
+            min-width: 250px;
+            text-align: right;
+        }
+        .config-group label {
+            color: #ffd700;
+            font-size: 13px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .config-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background: #1a1a2e;
+            color: #fff;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .config-group input:focus {
+            border-color: #ffd700;
+            outline: none;
+        }
+        
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .btn:hover { transform: scale(1.05); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-save { background: linear-gradient(90deg, #22c55e, #16a34a); color: #fff; }
+        .btn-test { background: linear-gradient(90deg, #3b82f6, #2563eb); color: #fff; }
+        .btn-primary { background: linear-gradient(90deg, #ff6b35, #f7931e); color: #fff; }
+        .btn-video { background: linear-gradient(90deg, #9333ea, #7c3aed); color: #fff; }
+        
+        .status-badge {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .status-badge.connected { background: #22c55e30; color: #22c55e; border: 1px solid #22c55e; }
+        .status-badge.disconnected { background: #ef444430; color: #ef4444; border: 1px solid #ef4444; }
+        
+        .mega-btn {
+            padding: 22px 50px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(90deg, #9333ea, #7c3aed, #6366f1);
+            color: #fff;
+            animation: glow 2s infinite;
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(147, 51, 234, 0.8); }
+        }
+        .mega-btn:hover { transform: scale(1.05); }
+        .mega-btn:disabled { opacity: 0.6; cursor: not-allowed; animation: none; transform: none; }
+        
+        /* Chapter Display */
+        .chapter-display {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            border: 2px solid #9333ea;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 900px;
+            display: none;
+        }
+        .chapter-display.active { display: block; }
+        .chapter-display h3 { color: #9333ea; text-align: center; margin-bottom: 15px; }
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .chapter-item {
+            background: #0a0a0a;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .chapter-item label { color: #ffd700; font-size: 11px; display: block; margin-bottom: 4px; }
+        .chapter-item .value { color: #22c55e; font-size: 14px; }
+        
+        /* Pipeline */
+        .pipeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 900px;
+            margin: 20px auto;
+        }
+        .step {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 18px 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .step.active {
+            border-color: #ffd700;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(255, 215, 0, 0.7); }
+        }
+        .step.done { border-color: #22c55e; background: linear-gradient(135deg, #0f2e0f, #1a4a1a); }
+        .step.error { border-color: #ef4444; background: linear-gradient(135deg, #2e0f0f, #4a1a1a); }
+        .step .icon { font-size: 2em; margin-bottom: 8px; }
+        .step .title { font-weight: bold; font-size: 0.95em; }
+        .step .status { font-size: 0.75em; color: #888; margin-top: 5px; }
+        
+        /* Preview Area */
+        .preview-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1100px;
+            margin: 20px auto;
+        }
+        .preview-box {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        .preview-box h3 { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .preview-box.image h3 { color: #ff6b35; }
+        .preview-box.video h3 { color: #9333ea; }
+        .preview-content {
+            width: 100%;
+            min-height: 300px;
+            background: #0a0a0a;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .preview-content img, .preview-content video {
+            max-width: 100%;
+            max-height: 320px;
+            border-radius: 8px;
+        }
+        .placeholder { text-align: center; color: #555; }
+        .placeholder .icon { font-size: 3.5em; margin-bottom: 10px; }
+        
+        /* Progress Bar */
+        .progress-container {
+            background: #0a0a0a;
+            border-radius: 10px;
+            height: 28px;
+            margin: 15px 0;
+            overflow: hidden;
+            display: none;
+        }
+        .progress-container.active { display: block; }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b35, #ffd700, #22c55e);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        /* Download Section */
+        .download-section {
+            background: linear-gradient(135deg, #22c55e15, #16a34a15);
+            border: 2px solid #22c55e;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 900px;
+            text-align: center;
+            display: none;
+        }
+        .download-section.active { display: block; }
+        .download-section h3 { color: #22c55e; margin-bottom: 15px; font-size: 1.3em; }
+        .download-btns { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .download-btns .btn { padding: 15px 30px; font-size: 1em; }
+        
+        /* Log Console */
+        .log-section { max-width: 1100px; margin: 20px auto; }
+        .log-section h3 { color: #ffd700; margin-bottom: 10px; }
+        .log-console {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 160px;
+            overflow-y: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+        }
+        .log-entry { padding: 3px 0; border-bottom: 1px solid #1a1a1a; }
+        .log-entry:last-child { border-bottom: none; }
+        .log-entry.info { color: #3b82f6; }
+        .log-entry.success { color: #22c55e; }
+        .log-entry.error { color: #ef4444; }
+        .log-entry.warning { color: #f59e0b; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .preview-area { grid-template-columns: 1fr; }
+            .pipeline { grid-template-columns: repeat(2, 1fr); }
+            .mega-btn { padding: 18px 35px; font-size: 1.1em; }
+            .config-row { flex-direction: column; }
+            .chapter-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎬 FunnyDates Video Factory</h1>
+        <p>לחיצה אחת = תמונה + וידאו מוכן להורדה!</p>
+        <div class="version-badge">🚀 Hollywood Automation</div>
+    </div>
+    
+    <!-- Control Panel -->
+    <div class="control-panel">
+        <h2>🎯 הגדרות</h2>
+        
+        <div class="config-section">
+            <div class="config-row">
+                <div class="config-group">
+                    <label>🔑 Replicate API Token:</label>
+                    <input type="password" id="apiToken" placeholder="r8_xxxx... (קבל בחינם מ-replicate.com)">
+                </div>
+            </div>
+            
+            <div class="btn-row">
+                <button class="btn btn-save" onclick="saveConfig()">💾 שמור</button>
+                <button class="btn btn-test" onclick="testConnection()">🔌 בדוק חיבור</button>
+                <div class="status-badge disconnected" id="statusBadge">❌ לא מחובר</div>
+            </div>
+        </div>
+        
+        <button class="mega-btn" onclick="startPipeline()" id="startBtn">
+            🎲 פרק רנדומלי → תמונה → וידאו → הורד!
+        </button>
+        
+        <p style="margin-top: 15px; font-size: 12px; color: #666;">
+            אין לך Token? <a href="https://replicate.com/account/api-tokens" target="_blank" style="color: #ffd700;">קבל בחינם כאן →</a>
+        </p>
+    </div>
+    
+    <!-- Chapter Display -->
+    <div class="chapter-display" id="chapterDisplay">
+        <h3>📖 פרק נוכחי</h3>
+        <div class="chapter-grid">
+            <div class="chapter-item">
+                <label>פרק</label>
+                <div class="value" id="dispChapter">-</div>
+            </div>
+            <div class="chapter-item">
+                <label>כותרת</label>
+                <div class="value" id="dispTitle">-</div>
+            </div>
+            <div class="chapter-item">
+                <label>Hook עברית 🇮🇱</label>
+                <div class="value" id="dispHookHeb">-</div>
+            </div>
+            <div class="chapter-item">
+                <label>Hook English 🇺🇸</label>
+                <div class="value" id="dispHookEng">-</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pipeline Steps -->
+    <div class="pipeline">
+        <div class="step" id="step1">
+            <div class="icon">🎲</div>
+            <div class="title">בחירת פרק</div>
+            <div class="status">ממתין</div>
+        </div>
+        <div class="step" id="step2">
+            <div class="icon">🎨</div>
+            <div class="title">יצירת תמונה</div>
+            <div class="status">ממתין</div>
+        </div>
+        <div class="step" id="step3">
+            <div class="icon">🎬</div>
+            <div class="title">יצירת וידאו</div>
+            <div class="status">ממתין</div>
+        </div>
+        <div class="step" id="step4">
+            <div class="icon">✅</div>
+            <div class="title">מוכן!</div>
+            <div class="status">ממתין</div>
+        </div>
+    </div>
+    
+    <!-- Preview Area -->
+    <div class="preview-area">
+        <div class="preview-box image">
+            <h3>🖼️ תמונה</h3>
+            <div class="preview-content" id="imagePreview">
+                <div class="placeholder">
+                    <div class="icon">🎨</div>
+                    <p>התמונה תופיע כאן</p>
+                </div>
+            </div>
+            <div class="progress-container" id="imageProgress">
+                <div class="progress-bar" style="width: 0%">0%</div>
+            </div>
+        </div>
+        <div class="preview-box video">
+            <h3>🎬 וידאו</h3>
+            <div class="preview-content" id="videoPreview">
+                <div class="placeholder">
+                    <div class="icon">🎥</div>
+                    <p>הוידאו יופיע כאן</p>
+                </div>
+            </div>
+            <div class="progress-container" id="videoProgress">
+                <div class="progress-bar" style="width: 0%">0%</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Download Section -->
+    <div class="download-section" id="downloadSection">
+        <h3>🎉 הכל מוכן להורדה!</h3>
+        <div class="download-btns">
+            <button class="btn btn-primary" onclick="downloadImage()">🖼️ הורד תמונה (PNG)</button>
+            <button class="btn btn-video" onclick="downloadVideo()">🎬 הורד וידאו (MP4)</button>
+        </div>
+    </div>
+    
+    <!-- Log Console -->
+    <div class="log-section">
+        <h3>📋 יומן פעולות</h3>
+        <div class="log-console" id="logConsole"></div>
+    </div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// CHAPTERS DATA - Based on "101 דייטים ואף נשיכה"
+// ═══════════════════════════════════════════════════════════════════════════
+const chapters = [
+    { id: 1, chapter: "פרק 1", title: "סלי חגים ואהבה קוסמית",
+      imagePrompt: "ULTRA SURREAL: Jewish grandmother astronaut in space launching gift baskets with challah toward single man on tiny planet, hearts and stars, cosmic matchmaking, Pixar meets Dali, 8K cinematic",
+      hookHebrew: "כשאמא שולחת סלי חג מהחלל... 🚀🧺", hookEnglish: "When mom sends care packages from space... 🚀🧺" },
+    { id: 2, chapter: "פרק 2", title: "דייט היין שהתפוצץ",
+      imagePrompt: "SURREAL DISASTER: Two wine-liquid people toasting, glasses exploding into fountains, white tablecloth destroyed, waiter horrified, romantic disaster comedy, hyperrealistic, 8K",
+      hookHebrew: "רצית להרשים עם יין יקר? הנה מה שקרה... 🍷💥", hookEnglish: "Tried fancy wine to impress? Here's what happened... 🍷💥" },
+    { id: 3, chapter: "פרק 3", title: "הנעל שגנבה את ההצגה",
+      imagePrompt: "ABSURD COMEDY: Giant designer high heel shoe on restaurant date with tiny embarrassed man, shoe has lipstick and winning the conversation, other diners are shoes, 8K",
+      hookHebrew: "הנעל שלה ניצחה אותי בדייט 👠😅", hookEnglish: "Her shoe won the date 👠😅" },
+    { id: 4, chapter: "פרק 4", title: "יער הדגלים האדומים",
+      imagePrompt: "PSYCHOLOGICAL SURREAL: Person walking happily through forest of giant red warning flags, each flag showing dating red flag, person wearing heart-shaped glasses oblivious, dark humor, 8K",
+      hookHebrew: "איך לא ראיתי את כל הדגלים האדומים?! 🚩❤️", hookEnglish: "How did I miss all the red flags?! 🚩❤️" },
+    { id: 5, chapter: "פרק 5", title: "הפרפרים שהשתלטו",
+      imagePrompt: "WHIMSICAL HORROR: Person with transparent glass stomach filled with thousands of crazy butterflies escaping through mouth during date, beautiful chaos, 8K",
+      hookHebrew: "זה לא פרפרים בבטן. זה פאניקה. 🦋😰", hookEnglish: "Those aren't butterflies. That's panic. 🦋😰" },
+    { id: 6, chapter: "פרק 6", title: "השחף שהרס הכל",
+      imagePrompt: "ACTION COMEDY: Seagull with aviator sunglasses crashing through restaurant window in slow motion, stealing fish from romantic dinner, explosion behind, Michael Bay style, 8K",
+      hookHebrew: "שחף אחד. דייט אחד. אפס סיכויים. 🦅🍽️", hookEnglish: "One seagull. One date. Zero chances. 🦅🍽️" },
+    { id: 7, chapter: "פרק 7", title: "הבריכה שחשפה סודות",
+      imagePrompt: "SURREAL REVELATION: Person diving into hotel pool, underwater reveals embarrassing secrets floating - photos, browser history, texts, shocked diver face, 8K",
+      hookHebrew: "הבריכה חשפה יותר מדי... 🏊‍♂️😳", hookEnglish: "The pool revealed too much... 🏊‍♂️😳" },
+    { id: 8, chapter: "פרק 8", title: "התפריט האינסופי",
+      imagePrompt: "INFINITE ABSURD: Couple at restaurant, menu unfolds infinitely filling universe, smoke waiter waiting eternally, decision paralysis, MC Escher style, 8K",
+      hookHebrew: "מוכנים להזמין? לא. אף פעם לא. 📜♾️", hookEnglish: "Ready to order? No. Never. 📜♾️" },
+    { id: 9, chapter: "פרק 9", title: "הודעות שרודפות",
+      imagePrompt: "DIGITAL HORROR: Giant phone screen, old WhatsApp messages crawling out as 3D monsters chasing sender through chat bubble city, blue checkmarks as eyes, 8K",
+      hookHebrew: "מחקת? הן זוכרות. 📱👻", hookEnglish: "Deleted? They remember. 📱👻" },
+    { id: 10, chapter: "פרק 10", title: "משולש אהבה גיאומטרי",
+      imagePrompt: "GEOMETRIC ROMANCE: Three people as geometric shapes trying to hug in Escher-impossible space, stairs to nowhere, mathematically impossible romance, 8K",
+      hookHebrew: "האהבה שלנו לא מסתדרת גיאומטרית 📐💔", hookEnglish: "Our love doesn't compute geometrically 📐💔" },
+    { id: 11, chapter: "פרק 11", title: "הטלפונים שהתאהבו",
+      imagePrompt: "RETRO ROMANCE: Two vintage rotary phones on candlelit dinner, cords intertwining like holding hands, hearts floating from receivers, humans jealous in background, 8K",
+      hookHebrew: "לפחות הטלפונים שלנו מסתדרים... 📞💕", hookEnglish: "At least our phones are compatible... 📞💕" },
+    { id: 12, chapter: "פרק 12", title: "ממלכת החתולים",
+      imagePrompt: "CAT DIMENSION: Woman on throne made entirely of fluffy cats, palace where everything is cats - furniture, chandelier, art, cat-snow falling outside, peak cat lady, 8K",
+      hookHebrew: "חתול אחד? יש לי ממלכה. 🐱👑", hookEnglish: "One cat? I have a kingdom. 🐱👑" },
+    { id: 13, chapter: "פרק 13", title: "הבאר שמראה אמת",
+      imagePrompt: "MYSTICAL WARNING: Ancient wishing well in moonlit forest, golden liquid shows visions of dating disasters, coins frozen mid-fall, fireflies spelling RUN, 8K",
+      hookHebrew: "ביקשתי אהבה. הבאר צחקה. ✨🌙", hookEnglish: "Wished for love. The well laughed. ✨🌙" },
+    { id: 14, chapter: "פרק 14", title: "מסיבה מרובת ממדים",
+      imagePrompt: "MULTIVERSE PARTY: Bachelorette party with same bride from parallel universes - fire bride, ice bride, flower bride - dancing in dimension-glitching club, 8K",
+      hookHebrew: "מסיבה אחת. אינסוף כלות. 🎉👰‍♀️", hookEnglish: "One party. Infinite brides. 🎉👰‍♀️" },
+    { id: 15, chapter: "פרק 15", title: "קאפקייקס בטיפול",
+      imagePrompt: "EMOTIONAL DESSERTS: Giant cupcakes with expressive faces at therapy group, one crying frosting tears, one angry with flames, pastel therapy room, 8K",
+      hookHebrew: "גם הקאפקייקס צריכים טיפול 🧁😭", hookEnglish: "Even cupcakes need therapy 🧁😭" },
+    { id: 16, chapter: "פרק 16", title: "דייט הפוך",
+      imagePrompt: "GRAVITY DEFIED: Couple on date in loft where furniture floats randomly, coffee going UP from cups, Inception romantic comedy, impossible perspectives, 8K",
+      hookHebrew: "הדייט התהפך עליי. פשוטו כמשמעו. 🙃☕", hookEnglish: "The date turned on me. Literally. 🙃☕" },
+    { id: 17, chapter: "פרק 17", title: "טיפת היין הקוסמית",
+      imagePrompt: "COSMIC DISASTER: Wine drop in extreme slow motion toward white dress, inside drop is entire galaxy with planets, woman's horrified frozen face, 8K",
+      hookHebrew: "הטיפה הזו הכילה יקום של אסון 🍷😱", hookEnglish: "That drop contained a universe of disaster 🍷😱" },
+    { id: 18, chapter: "פרק 18", title: "אהבה דיגיטלית",
+      imagePrompt: "DIGITAL DIVIDE: Two people inside phone screens floating in binary void, hands reaching trying to touch across digital divide, pixels and hearts floating, 8K",
+      hookHebrew: "המסך מחבר? המסך מפריד. 📱💔", hookEnglish: "Screen connects? Screen divides. 📱💔" },
+    { id: 19, chapter: "פרק 19", title: "שתי רגליים שמאליות",
+      imagePrompt: "DIRECTIONAL CHAOS: Person with left shoes on both feet, right shoes as gloves, walking backwards on circular sidewalk, signs pointing wrong directions, 8K",
+      hookHebrew: "הכל הפוך. גם הנעליים. 👟🔄", hookEnglish: "Everything backwards. Even shoes. 👟🔄" },
+    { id: 20, chapter: "פרק 20", title: "ריקוד סוף העולם",
+      imagePrompt: "APOCALYPTIC ROMANCE: Couple slow dancing on rooftop, multiple suns rising, aurora borealis, shooting stars, beautiful end of world, bittersweet silhouettes, 8K",
+      hookHebrew: "העולם נגמר. הריקוד לא. 💫🌅", hookEnglish: "World ending. Dance isn't. 💫🌅" },
+    { id: 21, chapter: "פרק 21", title: "מילים שנתקעו",
+      imagePrompt: "UNSPOKEN WORDS: Silent couple at dinner, words trapped in bubbles - I love you, Sorry, Stay, Goodbye - some popping, others escaping window, melancholic, 8K",
+      hookHebrew: "כל המילים שנתקעו בגרון 💭😶", hookEnglish: "All words stuck in throat 💭😶" },
+    { id: 22, chapter: "פרק 22", title: "ריקוד בזמן",
+      imagePrompt: "TIME-BENDING: Elderly couple dancing in empty ballroom, with each spin becoming younger, ballroom transforming through decades, golden memory tornado, 8K",
+      hookHebrew: "כל ריקוד מחזיר אותנו בזמן 💑⏰", hookEnglish: "Each dance takes us back in time 💑⏰" },
+    { id: 23, chapter: "פרק 23", title: "הספר שכותב את עצמו",
+      imagePrompt: "META FINALE: Book floating in space writing itself, pages turning showing reader reading, infinite recursive loop, all characters orbiting like satellites, 8K",
+      hookHebrew: "הספר הזה כותב אותך 📖✨", hookEnglish: "This book writes you 📖✨" }
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════
+const state = {
+    apiToken: '',
+    currentChapter: null,
+    imageBlob: null,
+    imageUrl: null,
+    videoUrl: null,
+    processing: false,
+    connected: false
+};
+
+// Backend URL - automatically detect
+const BACKEND_URL = window.location.origin;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INITIALIZATION
+// ═══════════════════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+    // Load saved token
+    const saved = localStorage.getItem('funnydates_token');
+    if (saved) {
+        document.getElementById('apiToken').value = saved;
+        state.apiToken = saved;
+        testConnection();
+    }
+    log('🎬 FunnyDates Video Factory מוכן!', 'success');
+    log(`📡 Backend: ${BACKEND_URL}`, 'info');
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LOGGING
+// ═══════════════════════════════════════════════════════════════════════════
+function log(msg, type = 'info') {
+    const console = document.getElementById('logConsole');
+    const entry = document.createElement('div');
+    entry.className = `log-entry ${type}`;
+    const time = new Date().toLocaleTimeString('he-IL');
+    entry.textContent = `[${time}] ${msg}`;
+    console.appendChild(entry);
+    console.scrollTop = console.scrollHeight;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════════════════════════════
+function saveConfig() {
+    const token = document.getElementById('apiToken').value.trim();
+    if (token) {
+        state.apiToken = token;
+        localStorage.setItem('funnydates_token', token);
+        log('💾 Token נשמר!', 'success');
+        testConnection();
+    } else {
+        log('❌ הכנס Token', 'error');
+    }
+}
+
+async function testConnection() {
+    log('🔌 בודק חיבור...', 'info');
+    
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/replicate?action=test`);
+        const data = await response.json();
+        
+        if (data.status === 'ok') {
+            updateStatus(true);
+            log('✅ Backend מחובר!', 'success');
+        } else {
+            updateStatus(false);
+            log('❌ Backend לא זמין', 'error');
+        }
+    } catch (error) {
+        updateStatus(false);
+        log(`❌ שגיאת חיבור: ${error.message}`, 'error');
+    }
+}
+
+function updateStatus(connected) {
+    state.connected = connected;
+    const badge = document.getElementById('statusBadge');
+    if (connected) {
+        badge.className = 'status-badge connected';
+        badge.textContent = '✅ מחובר!';
+    } else {
+        badge.className = 'status-badge disconnected';
+        badge.textContent = '❌ לא מחובר';
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// MAIN PIPELINE
+// ═══════════════════════════════════════════════════════════════════════════
+async function startPipeline() {
+    if (state.processing) return;
+    
+    if (!state.apiToken) {
+        alert('⚠️ הכנס Replicate API Token קודם!');
+        return;
+    }
+    
+    state.processing = true;
+    const btn = document.getElementById('startBtn');
+    btn.disabled = true;
+    
+    resetUI();
+    
+    try {
+        // STEP 1: Random Chapter
+        updateStep(1, 'active', '🎲 בוחר...');
+        const chapter = chapters[Math.floor(Math.random() * chapters.length)];
+        state.currentChapter = chapter;
+        showChapter(chapter);
+        await sleep(500);
+        updateStep(1, 'done', '✅');
+        log(`📖 ${chapter.chapter}: ${chapter.title}`, 'success');
+        
+        // STEP 2: Generate Image
+        updateStep(2, 'active', '🎨 יוצר...');
+        await generateImage(chapter);
+        updateStep(2, 'done', '✅');
+        
+        // STEP 3: Generate Video
+        updateStep(3, 'active', '🎬 יוצר...');
+        await generateVideo();
+        updateStep(3, 'done', '✅');
+        
+        // STEP 4: Done!
+        updateStep(4, 'done', '🎉');
+        document.getElementById('downloadSection').classList.add('active');
+        log('🎉 הכל מוכן! הורד את הקבצים!', 'success');
+        
+    } catch (error) {
+        log(`❌ שגיאה: ${error.message}`, 'error');
+        const activeStep = document.querySelector('.step.active');
+        if (activeStep) activeStep.classList.replace('active', 'error');
+    } finally {
+        state.processing = false;
+        btn.disabled = false;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// IMAGE GENERATION
+// ═══════════════════════════════════════════════════════════════════════════
+async function generateImage(chapter, attempt = 1) {
+    const maxAttempts = 5;
+    
+    try {
+        log(`🎨 יוצר תמונה (${attempt}/${maxAttempts})...`, 'info');
+        showProgress('imageProgress', 10);
+        
+        const prompt = encodeURIComponent(chapter.imagePrompt);
+        const seed = Date.now() + attempt;
+        const url = `https://image.pollinations.ai/prompt/${prompt}?width=1024&height=1024&seed=${seed}&nologo=true`;
+        
+        showProgress('imageProgress', 30);
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 60000);
+        
+        const response = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        
+        if (response.status === 429) {
+            throw new Error('RATE_LIMIT');
+        }
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        
+        showProgress('imageProgress', 70);
+        
+        const blob = await response.blob();
+        state.imageBlob = blob;
+        state.imageUrl = URL.createObjectURL(blob);
+        
+        showProgress('imageProgress', 100);
+        document.getElementById('imagePreview').innerHTML = `<img src="${state.imageUrl}" alt="${chapter.title}">`;
+        
+        log('✅ תמונה מוכנה!', 'success');
+        hideProgress('imageProgress');
+        return true;
+        
+    } catch (error) {
+        if (attempt < maxAttempts) {
+            const waitTime = 3000 * attempt;
+            log(`⏳ Rate limit - ממתין ${waitTime/1000}s...`, 'warning');
+            await sleep(waitTime);
+            return generateImage(chapter, attempt + 1);
+        }
+        throw error;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// VIDEO GENERATION
+// ═══════════════════════════════════════════════════════════════════════════
+async function generateVideo() {
+    log('🎬 שולח ל-Replicate...', 'info');
+    showProgress('videoProgress', 5);
+    
+    // Convert image to base64
+    const base64 = await blobToBase64(state.imageBlob);
+    showProgress('videoProgress', 10);
+    
+    // Create prediction
+    const createResponse = await fetch(`${BACKEND_URL}/api/replicate?action=create`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${state.apiToken}`
+        },
+        body: JSON.stringify({
+            version: "3f0457e4619daac51203dedb472816fd4af51f3149fa7a9e0b5ffcf1b8172438",
+            input: {
+                input_image: base64,
+                video_length: "14_frames_with_svd",
+                sizing_strategy: "maintain_aspect_ratio",
+                frames_per_second: 6,
+                motion_bucket_id: 127,
+                cond_aug: 0.02
+            }
+        })
+    });
+    
+    if (!createResponse.ok) {
+        const errorText = await createResponse.text();
+        throw new Error(`Create failed: ${errorText}`);
+    }
+    
+    const prediction = await createResponse.json();
+    
+    if (!prediction.id) {
+        throw new Error(prediction.error || 'Failed to create prediction');
+    }
+    
+    log(`📡 יצירה התחילה! ID: ${prediction.id.slice(0, 8)}...`, 'success');
+    showProgress('videoProgress', 20);
+    
+    // Poll for completion
+    let polls = 0;
+    const maxPolls = 60;
+    
+    while (polls < maxPolls) {
+        polls++;
+        
+        const statusResponse = await fetch(
+            `${BACKEND_URL}/api/replicate?action=status&predictionId=${prediction.id}`,
+            { headers: { 'Authorization': `Token ${state.apiToken}` } }
+        );
+        
+        const data = await statusResponse.json();
+        const progress = 20 + (polls / maxPolls) * 75;
+        showProgress('videoProgress', progress);
+        
+        if (data.status === 'succeeded' && data.output) {
+            state.videoUrl = data.output;
+            showProgress('videoProgress', 100);
+            
+            document.getElementById('videoPreview').innerHTML = `
+                <video controls autoplay loop muted style="max-width: 100%; border-radius: 8px;">
+                    <source src="${state.videoUrl}" type="video/mp4">
+                </video>
+            `;
+            
+            log('✅ וידאו מוכן!', 'success');
+            hideProgress('videoProgress');
+            return true;
+        }
+        
+        if (data.status === 'failed' || data.status === 'canceled') {
+            throw new Error(`Video ${data.status}: ${data.error || 'Unknown error'}`);
+        }
+        
+        if (polls % 10 === 0) {
+            log(`⏳ סטטוס: ${data.status} (${Math.round(progress)}%)`, 'info');
+        }
+        
+        await sleep(3000);
+    }
+    
+    throw new Error('Timeout - לקח יותר מדי זמן');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// DOWNLOAD FUNCTIONS
+// ═══════════════════════════════════════════════════════════════════════════
+function downloadImage() {
+    if (!state.imageBlob || !state.currentChapter) return;
+    
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(state.imageBlob);
+    a.download = `funnydates-ch${state.currentChapter.id}-${Date.now()}.png`;
+    a.click();
+    log('💾 תמונה הורדה!', 'success');
+}
+
+async function downloadVideo() {
+    if (!state.videoUrl || !state.currentChapter) return;
+    
+    try {
+        log('⏳ מוריד וידאו...', 'info');
+        const response = await fetch(state.videoUrl);
+        const blob = await response.blob();
+        
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `funnydates-ch${state.currentChapter.id}-${Date.now()}.mp4`;
+        a.click();
+        log('💾 וידאו הורד!', 'success');
+    } catch (error) {
+        log('⚠️ פותח בחלון חדש...', 'warning');
+        window.open(state.videoUrl, '_blank');
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════════════════
+function resetUI() {
+    for (let i = 1; i <= 4; i++) {
+        updateStep(i, '', 'ממתין');
+    }
+    document.getElementById('chapterDisplay').classList.remove('active');
+    document.getElementById('downloadSection').classList.remove('active');
+    document.getElementById('imagePreview').innerHTML = '<div class="placeholder"><div class="icon">🎨</div><p>התמונה תופיע כאן</p></div>';
+    document.getElementById('videoPreview').innerHTML = '<div class="placeholder"><div class="icon">🎥</div><p>הוידאו יופיע כאן</p></div>';
+    hideProgress('imageProgress');
+    hideProgress('videoProgress');
+    state.imageBlob = null;
+    state.imageUrl = null;
+    state.videoUrl = null;
+}
+
+function showChapter(chapter) {
+    document.getElementById('chapterDisplay').classList.add('active');
+    document.getElementById('dispChapter').textContent = chapter.chapter;
+    document.getElementById('dispTitle').textContent = chapter.title;
+    document.getElementById('dispHookHeb').textContent = chapter.hookHebrew;
+    document.getElementById('dispHookEng').textContent = chapter.hookEnglish;
+}
+
+function updateStep(num, status, text) {
+    const step = document.getElementById(`step${num}`);
+    step.className = `step ${status}`;
+    step.querySelector('.status').textContent = text;
+}
+
+function showProgress(id, percent) {
+    const container = document.getElementById(id);
+    container.classList.add('active');
+    const bar = container.querySelector('.progress-bar');
+    bar.style.width = `${percent}%`;
+    bar.textContent = `${Math.round(percent)}%`;
+}
+
+function hideProgress(id) {
+    document.getElementById(id).classList.remove('active');
+}
+
+function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+</script>
+</body>
+</html>

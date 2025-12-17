@@ -1,0 +1,8 @@
+{
+  "name": "funnydates-video-factory",
+  "version": "1.0.0",
+  "description": "🎬 Automatic video generation for FunnyDates book marketing",
+  "author": "Nir Ram",
+  "license": "MIT",
+  "private": true
+}
