@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FunnyDates Video Factory V5.0 🎬</title>
+    <title>FunnyDates Video Factory V6.1 🎬</title>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -20,13 +20,7 @@
             --text-secondary: #a0a0b0;
             --border-color: #333355;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Heebo', sans-serif;
             background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0a2e 50%, #0a1a2e 100%);
@@ -34,67 +28,25 @@
             min-height: 100vh;
             padding: 20px;
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        /* Free badge */
-        .free-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #4ade80, #22c55e);
-            color: #000;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-right: 10px;
-        }
-
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; }
         .header h1 {
             font-size: 2.5rem;
             font-weight: 900;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink), var(--accent-orange));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
         }
+        .badges { margin-top: 15px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .badge { padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; }
+        .badge-free { background: linear-gradient(135deg, #4ade80, #22c55e); color: #000; }
+        .badge-gold { background: linear-gradient(135deg, #ffd700, #ff6b35); color: #000; }
+        .badge-chapters { background: linear-gradient(135deg, #3b82f6, #9b59b6); color: #fff; }
 
-        .header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .version-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-orange));
-            color: #000;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-top: 10px;
-        }
-
-        /* Tabs */
-        .tabs-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
+        .tabs-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
         .tab-btn {
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 15px 30px;
+            font-size: 1.1rem;
             font-weight: 700;
             border: 2px solid var(--border-color);
             border-radius: 15px;
@@ -102,43 +54,18 @@
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
-        .tab-btn:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--accent-purple);
-        }
-
+        .tab-btn:hover { border-color: var(--accent-purple); }
         .tab-btn.active {
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
             border-color: transparent;
             color: white;
-            transform: scale(1.05);
         }
 
-        .tab-btn .icon {
-            font-size: 1.5rem;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Tab Content */
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Cards */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -146,54 +73,8 @@
             padding: 25px;
             margin-bottom: 20px;
         }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; }
 
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Settings Card */
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .setting-item {
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 15px;
-        }
-
-        .setting-label {
-            display: block;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
-
-        .setting-input {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: white;
-            font-size: 1rem;
-            font-family: inherit;
-        }
-
-        .setting-input:focus {
-            outline: none;
-            border-color: var(--accent-purple);
-        }
-
-        /* Buttons */
         .btn {
             padding: 12px 25px;
             font-size: 1rem;
@@ -202,78 +83,14 @@
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
             font-family: inherit;
         }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink)); color: white; }
+        .btn-success { background: linear-gradient(135deg, var(--accent-green), #22c55e); color: #000; }
+        .btn-warning { background: linear-gradient(135deg, var(--accent-orange), var(--accent-gold)); color: #000; }
+        .btn-large { padding: 18px 40px; font-size: 1.2rem; width: 100%; }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(155, 89, 182, 0.3);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--accent-green), #22c55e);
-            color: #000;
-        }
-
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, var(--accent-orange), var(--accent-gold));
-            color: #000;
-        }
-
-        .btn-warning:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
-        }
-
-        .btn-blue {
-            background: linear-gradient(135deg, var(--accent-blue), #2563eb);
-            color: white;
-        }
-
-        .btn-blue:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--accent-purple);
-            color: var(--accent-purple);
-        }
-
-        .btn-outline:hover {
-            background: var(--accent-purple);
-            color: white;
-        }
-
-        .btn-large {
-            padding: 18px 40px;
-            font-size: 1.2rem;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .buttons-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        /* Chapter Display */
         .chapter-display {
             background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(233, 30, 99, 0.1));
             border: 2px solid var(--accent-purple);
@@ -281,183 +98,84 @@
             padding: 20px;
             margin-bottom: 20px;
         }
+        .chapter-number { font-size: 1.5rem; font-weight: 900; color: var(--accent-pink); }
+        .chapter-title { font-size: 1.3rem; font-weight: 700; margin: 10px 0; }
+        .chapter-subtitle { color: var(--accent-gold); }
 
-        .chapter-number {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--accent-pink);
-        }
-
-        .chapter-title-he {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: white;
-            margin: 10px 0;
-        }
-
-        .chapter-title-en {
-            font-size: 1.1rem;
-            color: var(--accent-gold);
-        }
-
-        /* Prompt Display */
-        .prompt-box {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 15px 0;
-            position: relative;
-        }
-
-        .prompt-label {
-            position: absolute;
-            top: -10px;
-            right: 15px;
-            background: var(--bg-card);
-            padding: 0 10px;
-            font-size: 0.8rem;
-            color: var(--accent-gold);
-        }
-
-        .prompt-text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: var(--text-primary);
-            direction: ltr;
-            text-align: left;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--accent-purple);
-            border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            color: white;
-            font-size: 0.8rem;
-        }
-
-        .copy-btn:hover {
-            background: var(--accent-pink);
-        }
-
-        .copy-btn.copied {
-            background: var(--accent-green);
-        }
-
-        /* Pipeline */
-        .pipeline {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 215, 0, 0.1));
-            border: 2px solid var(--accent-orange);
-            border-radius: 15px;
-            padding: 20px;
-        }
-
-        .pipeline-step {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-        }
-
-        .pipeline-arrow {
-            color: var(--accent-orange);
-            font-size: 1.5rem;
-        }
-
-        /* Status Grid */
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .status-item {
+        /* Prompt Selection */
+        .prompt-options { display: flex; flex-direction: column; gap: 15px; margin: 20px 0; }
+        .prompt-option {
             background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .status-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .status-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .status-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-top: 5px;
-        }
-
-        .status-value.ready {
-            color: var(--accent-green);
-        }
-
-        .status-value.pending {
-            color: var(--accent-orange);
-        }
-
-        /* Video Tab Specific */
-        .image-selector {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .image-option {
-            background: var(--bg-card-hover);
             border: 2px solid var(--border-color);
             border-radius: 15px;
-            padding: 15px;
+            padding: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-align: center;
+        }
+        .prompt-option:hover { border-color: var(--accent-purple); background: rgba(155, 89, 182, 0.1); }
+        .prompt-option.selected { border-color: var(--accent-green); background: rgba(74, 222, 128, 0.1); }
+        .prompt-option-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .prompt-number {
+            width: 30px; height: 30px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900;
+        }
+        .prompt-style { color: var(--accent-gold); font-weight: 700; }
+        .prompt-text { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; direction: ltr; text-align: left; }
+
+        /* Images Grid */
+        .images-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .image-option {
+            position: relative;
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .image-option:hover { border-color: var(--accent-purple); }
+        .image-option.selected { border-color: var(--accent-green); box-shadow: 0 0 20px rgba(74, 222, 128, 0.5); }
+        .image-option img { width: 100%; height: 250px; object-fit: cover; }
+        .image-option .num {
+            position: absolute; top: 10px; right: 10px;
+            width: 35px; height: 35px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900;
+        }
+        .image-option .dl-btn {
+            position: absolute; bottom: 10px; left: 10px;
+            background: var(--accent-green);
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
         }
 
-        .image-option:hover {
-            border-color: var(--accent-purple);
-            transform: translateY(-3px);
+        .loading-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .loading-box {
+            height: 250px;
+            background: linear-gradient(135deg, #1a1a2e, #252540);
+            border-radius: 15px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 10px;
         }
-
-        .image-option.selected {
-            border-color: var(--accent-green);
-            background: rgba(74, 222, 128, 0.1);
+        .spinner {
+            width: 40px; height: 40px;
+            border: 4px solid rgba(255,255,255,0.2);
+            border-top-color: var(--accent-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .image-placeholder {
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(135deg, #333, #222);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
-        .video-prompts-container {
-            margin-top: 20px;
-        }
-
-        .video-prompt-option {
+        /* Video Tab */
+        .video-style-option {
             background: rgba(255,255,255,0.05);
             border: 2px solid var(--border-color);
             border-radius: 15px;
@@ -466,627 +184,576 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+        .video-style-option:hover { border-color: var(--accent-blue); }
+        .video-style-option.selected { border-color: var(--accent-green); background: rgba(74, 222, 128, 0.1); }
 
-        .video-prompt-option:hover {
-            border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.1);
-        }
-
-        .video-prompt-option.selected {
-            border-color: var(--accent-green);
-            background: rgba(74, 222, 128, 0.1);
-        }
-
-        .prompt-option-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .prompt-option-number {
+        .copy-btn {
             background: var(--accent-purple);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
             color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
+            font-weight: 600;
+            margin-top: 10px;
         }
+        .copy-btn:hover { background: var(--accent-pink); }
 
-        .prompt-option-style {
-            color: var(--accent-gold);
-            font-size: 0.9rem;
-        }
-
-        /* Descriptions */
-        .descriptions-box {
-            background: rgba(255, 215, 0, 0.1);
-            border: 2px solid var(--accent-gold);
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .description-item {
-            display: flex;
-            gap: 15px;
-            align-items: flex-start;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .description-item:last-child {
-            border-bottom: none;
-        }
-
-        .description-lang {
-            background: var(--accent-gold);
-            color: #000;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .description-text {
-            flex: 1;
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .tabs-container {
-                flex-direction: column;
-            }
-            
-            .tab-btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .status-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .pipeline {
-                flex-direction: column;
-            }
-        }
-
-        /* Crazy Visual Effects */
-        .crazy-glow {
-            animation: crazyGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes crazyGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(155, 89, 182, 0.5); }
-            33% { box-shadow: 0 0 30px rgba(233, 30, 99, 0.5); }
-            66% { box-shadow: 0 0 25px rgba(255, 107, 53, 0.5); }
-        }
-
-        .rainbow-text {
-            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: rainbow 3s ease infinite;
-        }
-
-        @keyframes rainbow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            .header h1 { font-size: 1.8rem; }
+            .images-grid, .loading-grid { grid-template-columns: 1fr; }
+            .image-option img, .loading-box { height: 200px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <header class="header">
-            <h1>FunnyDates Video Factory V5.0 🎬</h1>
-            <p>מערכת הפקת תמונות וסרטונים אוטומטית</p>
-            <div style="margin-top: 15px;">
-                <span class="free-badge">🆓 חינם לגמרי!</span>
-                <span class="version-badge">✨ HOLLYWOOD EDITION ✨</span>
+            <h1>FunnyDates Video Factory V6.1 🎬</h1>
+            <p style="color: var(--text-secondary);">101 דייטים ואף נשיכה - מערכת הפקה מלאה</p>
+            <div class="badges">
+                <span class="badge badge-free">🆓 חינם לגמרי</span>
+                <span class="badge badge-chapters">📚 101+ פרקים</span>
+                <span class="badge badge-gold">🎨 3 פרומפטים × 4 תמונות</span>
             </div>
-            <p style="color: var(--accent-green); margin-top: 10px; font-size: 0.9rem;">
-                Powered by Pollinations.ai - ללא הגבלה, ללא רישום
-            </p>
         </header>
 
-        <!-- Tabs -->
         <div class="tabs-container">
-            <button class="tab-btn active" onclick="switchTab('images')">
-                <span class="icon">🎨</span>
-                <span>תמונות</span>
-            </button>
-            <button class="tab-btn" onclick="switchTab('video')">
-                <span class="icon">🎬</span>
-                <span>וידאו (Pix Verse)</span>
-            </button>
+            <button class="tab-btn active" onclick="switchTab('images')">🎨 תמונות</button>
+            <button class="tab-btn" onclick="switchTab('video')">🎬 וידאו</button>
         </div>
 
-        <!-- Tab 1: Images -->
+        <!-- TAB: Images -->
         <div id="tab-images" class="tab-content active">
-            <!-- Info Card -->
-            <div class="card" style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(34, 197, 94, 0.1)); border-color: var(--accent-green);">
-                <h2 class="card-title">🆓 יצירת תמונות חינם!</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 10px;">
-                    המערכת משתמשת ב-<strong style="color: var(--accent-green);">Pollinations.ai</strong> - שירות AI חינמי לגמרי!
-                </p>
-                <ul style="color: var(--text-secondary); line-height: 2;">
-                    <li>✅ ללא הגבלת תמונות</li>
-                    <li>✅ ללא רישום או token</li>
-                    <li>✅ תמונות באיכות גבוהה</li>
-                    <li>✅ לחיצה אחת = תמונה מוכנה</li>
-                </ul>
-            </div>
-
-            <!-- Pipeline -->
-            <div class="card">
-                <div class="pipeline crazy-glow">
-                    <span class="pipeline-step">🎲 פרק רנדומלי</span>
-                    <span class="pipeline-arrow">→</span>
-                    <span class="pipeline-step">🎨 תמונה ביזארית</span>
-                    <span class="pipeline-arrow">→</span>
-                    <span class="pipeline-step">💾 הורדה</span>
-                    <span class="pipeline-arrow">→</span>
-                    <span class="pipeline-step rainbow-text">🔥 סוריאליזם מטורף!</span>
-                </div>
-            </div>
-
-            <!-- Generate Button -->
-            <button class="btn btn-warning btn-large" onclick="generateImage()">
-                🎲 הגרל פרק רנדומלי → צור תמונה מטורפת!
+            <button class="btn btn-warning btn-large" onclick="pickRandomChapter()">
+                🎲 הגרל פרק רנדומלי מתוך 101+
             </button>
 
-            <!-- Current Chapter -->
-            <div class="card" id="chapterCard" style="display: none;">
-                <h2 class="card-title">📖 פרק נוכחי</h2>
+            <!-- Step 1: Chapter -->
+            <div class="card" id="step1" style="display:none;">
+                <h2 class="card-title">📖 שלב 1: הפרק שנבחר</h2>
                 <div class="chapter-display">
-                    <div class="chapter-number" id="chapterNumber">פרק 3</div>
-                    <div class="chapter-title-he" id="chapterTitleHe">הנעל שגנבה את ההצגה</div>
-                    <div class="chapter-title-en" id="chapterTitleEn">🎭👠 Her shoe won the date</div>
+                    <div class="chapter-number" id="chapNum"></div>
+                    <div class="chapter-title" id="chapTitle"></div>
+                    <div class="chapter-subtitle" id="chapSub"></div>
                 </div>
+                <button class="btn btn-primary" onclick="pickRandomChapter()" style="margin-top:10px;">🔄 פרק אחר</button>
             </div>
 
-            <!-- Image Prompt -->
-            <div class="card" id="imagePromptCard" style="display: none;">
-                <h2 class="card-title">🎬 פרומפט לתמונה (ריאליסטי + ביזארי)</h2>
-                <div class="prompt-box">
-                    <span class="prompt-label">Image Prompt - REALISTIC BIZARRE 🎬</span>
-                    <button class="copy-btn" onclick="copyPrompt('imagePrompt')">📋 העתק</button>
-                    <p class="prompt-text" id="imagePrompt">
-                        Surrealist dating nightmare: A giant stiletto heel the size of a building crushes a romantic dinner table, wine glasses floating in zero gravity, the man's face melting like Dalí clock, woman made entirely of disco balls, neon pink and electric blue lighting, fish swimming through the air wearing tuxedos, the moon is actually a giant emoji, everything dripping with gold honey, hyper-detailed chaos, 8K nightmare fuel, Salvador Dalí meets Las Vegas fever dream
-                    </p>
-                </div>
-                <div class="buttons-row">
-                    <button class="btn btn-outline" onclick="regeneratePrompt()">🔄 פרומפט אחר</button>
-                </div>
+            <!-- Step 2: Pick Prompt -->
+            <div class="card" id="step2" style="display:none;">
+                <h2 class="card-title">🎯 שלב 2: בחר פרומפט (3 אפשרויות)</h2>
+                <div class="prompt-options" id="promptOptions"></div>
+                <button class="btn btn-success btn-large" id="generateBtn" onclick="generate4Images()" disabled style="margin-top:15px;">
+                    👆 בחר פרומפט קודם
+                </button>
             </div>
 
-            <!-- Loading -->
-            <div class="card" id="loadingCard" style="display: none; text-align: center;">
-                <div class="loading" style="width: 60px; height: 60px; margin: 20px auto;"></div>
-                <h2 style="color: var(--accent-purple);">🎨 יוצר תמונה מטורפת...</h2>
-                <p style="color: var(--text-secondary);">זה לוקח כ-10-20 שניות</p>
+            <!-- Step 3: Loading -->
+            <div class="card" id="step3" style="display:none;">
+                <h2 class="card-title">⏳ יוצר 4 תמונות...</h2>
+                <div class="loading-grid">
+                    <div class="loading-box"><div class="spinner"></div><span>1</span></div>
+                    <div class="loading-box"><div class="spinner"></div><span>2</span></div>
+                    <div class="loading-box"><div class="spinner"></div><span>3</span></div>
+                    <div class="loading-box"><div class="spinner"></div><span>4</span></div>
+                </div>
+                <p style="text-align:center; margin-top:15px; color:var(--text-secondary);">20-40 שניות...</p>
             </div>
 
-            <!-- Generated Image -->
-            <div class="card" id="imageResultCard" style="display: none;">
-                <h2 class="card-title">🖼️ התמונה שנוצרה</h2>
-                <div style="text-align: center;">
-                    <img id="generatedImage" src="" alt="Generated Image" style="max-width: 100%; border-radius: 15px; margin-bottom: 15px;">
-                </div>
-                <div class="buttons-row" style="justify-content: center;">
-                    <button class="btn btn-success btn-large" onclick="downloadImage()">
-                        💾 הורד תמונה ל-Downloads
-                    </button>
-                </div>
-            </div>
-
-            <!-- Status -->
-            <div class="card">
-                <h2 class="card-title">📊 סטטוס</h2>
-                <div class="status-grid">
-                    <div class="status-item">
-                        <div class="status-icon">✅</div>
-                        <div class="status-label">מוכן!</div>
-                        <div class="status-value ready" id="statusReady">ממתין</div>
-                    </div>
-                    <div class="status-item">
-                        <div class="status-icon">🎬</div>
-                        <div class="status-label">וידאו</div>
-                        <div class="status-value" id="statusVideo">🔜</div>
-                    </div>
-                    <div class="status-item">
-                        <div class="status-icon">🎨</div>
-                        <div class="status-label">תמונה</div>
-                        <div class="status-value" id="statusImage">✅</div>
-                    </div>
-                    <div class="status-item">
-                        <div class="status-icon">📖</div>
-                        <div class="status-label">בחירת פרק</div>
-                        <div class="status-value" id="statusChapter">✅</div>
-                    </div>
+            <!-- Step 4: Results -->
+            <div class="card" id="step4" style="display:none;">
+                <h2 class="card-title">🖼️ שלב 3: בחר את התמונה הטובה!</h2>
+                <div class="images-grid" id="imagesGrid"></div>
+                <div style="margin-top:20px; text-align:center;">
+                    <button class="btn btn-warning" onclick="generate4Images()">🔄 4 תמונות חדשות</button>
+                    <button class="btn btn-primary" onclick="switchTab('video')" style="margin-right:10px;">🎬 המשך לוידאו</button>
                 </div>
             </div>
         </div>
 
-        <!-- Tab 2: Video -->
+        <!-- TAB: Video -->
         <div id="tab-video" class="tab-content">
-            <!-- Instructions -->
             <div class="card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2)); border-color: var(--accent-blue);">
-                <h2 class="card-title">🎬 יצירת וידאו ב-Pix Verse</h2>
+                <h2 class="card-title">🎬 יצירת וידאו</h2>
                 <ol style="line-height: 2; color: var(--text-secondary);">
-                    <li>בחר תמונה מהגלריה למטה (או צור חדשה בטאב תמונות)</li>
-                    <li>בחר סגנון וידאו מ-3 האפשרויות</li>
-                    <li>העתק את הפרומפט והתמונה</li>
-                    <li>הדבק ב-<a href="https://app.pix.verse" target="_blank" style="color: var(--accent-gold);">Pix Verse</a> וצור וידאו מדהים!</li>
+                    <li>הורד את התמונה שבחרת</li>
+                    <li>בחר סגנון וידאו והעתק פרומפט</li>
+                    <li>פתח <a href="https://pika.art" target="_blank" style="color:var(--accent-gold);">Pika</a> / <a href="https://app.runwayml.com" target="_blank" style="color:var(--accent-gold);">Runway</a> / <a href="https://pixverse.ai" target="_blank" style="color:var(--accent-gold);">PixVerse</a></li>
+                    <li>העלה תמונה + הדבק פרומפט = וידאו!</li>
                 </ol>
             </div>
 
-            <!-- Select Image -->
+            <!-- Selected Image Preview -->
+            <div class="card" id="selectedImageCard" style="display:none;">
+                <h2 class="card-title">🖼️ התמונה שבחרת</h2>
+                <img id="selectedImagePreview" style="width:100%; max-width:400px; border-radius:15px; display:block; margin:0 auto;">
+                <div style="text-align:center; margin-top:15px;">
+                    <button class="btn btn-success" onclick="downloadSelectedImage()">💾 הורד תמונה</button>
+                </div>
+            </div>
+
+            <!-- Video Styles -->
             <div class="card">
-                <h2 class="card-title">🖼️ בחר תמונה</h2>
-                <div class="image-selector" id="imageSelector">
-                    <div class="image-option" onclick="selectImage(1)">
-                        <div class="image-placeholder">🎭</div>
-                        <div>תמונה אחרונה</div>
-                        <small style="color: var(--text-secondary);">פרק 3 - הנעל שגנבה</small>
+                <h2 class="card-title">🎥 בחר סגנון וידאו</h2>
+                <div id="videoStyles">
+                    <div class="video-style-option" onclick="selectVideoStyle(0, this)">
+                        <strong>🎬 קולנועי / דרמטי</strong>
+                        <p class="prompt-text" style="margin-top:10px;" id="vidPrompt0">Cinematic slow motion, camera pushes in dramatically, orchestral tension, shallow depth of field, film grain texture, movie trailer quality, emotional impact moment</p>
+                        <button class="copy-btn" onclick="copyVidPrompt(0); event.stopPropagation();">📋 העתק</button>
                     </div>
-                    <div class="image-option" onclick="selectImage(2)">
-                        <div class="image-placeholder">🍝</div>
-                        <div>תמונה קודמת</div>
-                        <small style="color: var(--text-secondary);">פרק 7 - הספגטי המפתיע</small>
+                    <div class="video-style-option" onclick="selectVideoStyle(1, this)">
+                        <strong>😂 קומדיה / TikTok</strong>
+                        <p class="prompt-text" style="margin-top:10px;" id="vidPrompt1">Comedy timing, quick zoom on reaction faces, upbeat energy, bright lighting, sitcom style camera work, viral TikTok moment, funny freeze frame</p>
+                        <button class="copy-btn" onclick="copyVidPrompt(1); event.stopPropagation();">📋 העתק</button>
                     </div>
-                    <div class="image-option" onclick="selectImage(3)">
-                        <div class="image-placeholder">➕</div>
-                        <div>צור תמונה חדשה</div>
-                        <small style="color: var(--text-secondary);">עבור לטאב תמונות</small>
+                    <div class="video-style-option" onclick="selectVideoStyle(2, this)">
+                        <strong>📱 POV / ריאליסטי</strong>
+                        <p class="prompt-text" style="margin-top:10px;" id="vidPrompt2">POV handheld camera, authentic shaky footage, reaction video style, natural lighting, Instagram Reels aesthetic, relatable moment captured</p>
+                        <button class="copy-btn" onclick="copyVidPrompt(2); event.stopPropagation();">📋 העתק</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Video Prompts -->
-            <div class="card" id="videoPromptsCard">
-                <h2 class="card-title">🎥 בחר סגנון וידאו (3 אפשרויות)</h2>
-                <div class="video-prompts-container" id="videoPromptsContainer">
-                    <p style="color: var(--text-secondary); text-align: center; padding: 30px;">
-                        👆 בחר תמונה קודם כדי לראות את אפשרויות הוידאו
-                    </p>
-                </div>
-            </div>
-
-            <!-- Video Descriptions -->
+            <!-- Descriptions -->
             <div class="card">
-                <h2 class="card-title">📝 תיאורים לסרטון (להעתקה)</h2>
-                <div class="descriptions-box">
-                    <div class="description-item">
-                        <span class="description-lang">🇮🇱 עברית</span>
-                        <div class="description-text">
-                            <p id="descHe">כשהנעל שלה הפכה לכוכבת הערב... 👠😂 #דייטים #סיפורים_מטורפים #101דייטים</p>
-                            <button class="copy-btn" style="position: static; margin-top: 10px;" onclick="copyPrompt('descHe')">📋 העתק</button>
-                        </div>
+                <h2 class="card-title">📝 תיאורים לסרטון</h2>
+                <div style="background:rgba(255,215,0,0.1); border:2px solid var(--accent-gold); border-radius:15px; padding:20px;">
+                    <div style="margin-bottom:20px;">
+                        <strong style="color:var(--accent-gold);">🇮🇱 עברית:</strong>
+                        <p id="descHe" style="margin-top:5px;">-</p>
+                        <button class="copy-btn" onclick="copyDesc('he')">📋 העתק</button>
                     </div>
-                    <div class="description-item">
-                        <span class="description-lang">🇺🇸 English</span>
-                        <div class="description-text">
-                            <p id="descEn">When her shoe became the star of the date... 👠😂 #dating #crazystories #lovebites101</p>
-                            <button class="copy-btn" style="position: static; margin-top: 10px;" onclick="copyPrompt('descEn')">📋 העתק</button>
-                        </div>
+                    <div>
+                        <strong style="color:var(--accent-gold);">🇺🇸 English:</strong>
+                        <p id="descEn" style="margin-top:5px;" dir="ltr">-</p>
+                        <button class="copy-btn" onclick="copyDesc('en')">📋 העתק</button>
                     </div>
                 </div>
-            </div>
-
-            <!-- Copy All for Pix Verse -->
-            <div class="card" style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(34, 197, 94, 0.2)); border-color: var(--accent-green);">
-                <h2 class="card-title">🚀 מוכן ל-Pix Verse!</h2>
-                <div class="buttons-row" style="justify-content: center;">
-                    <button class="btn btn-success btn-large" onclick="copyAllForPixVerse()">
-                        📦 העתק הכל (תמונה + פרומפט)
-                    </button>
-                </div>
-                <p style="text-align: center; margin-top: 15px; color: var(--text-secondary);">
-                    לאחר ההעתקה, פתח את <a href="https://app.pix.verse" target="_blank" style="color: var(--accent-gold);">Pix Verse</a> והדבק
-                </p>
             </div>
         </div>
     </div>
 
-    <script>
-        // Chapters data with specific bizarre scenarios
-        const chapters = [
-            { num: 1, he: "הדייט הראשון שהפך לסיוט", en: "First date nightmare", scene: "A realistic restaurant date scene, the man suddenly has spaghetti exploding from his nose like a fountain, the woman looks shocked with wine glass frozen mid-air, other diners staring in disbelief, photorealistic style, cinematic lighting, dramatic moment" },
-            { num: 2, he: "כשהקינוח התפוצץ", en: "When dessert exploded", scene: "Elegant restaurant, chocolate souffle literally exploding like a volcano covering the man's expensive white suit, the woman trying not to laugh, waiter in background dropping his tray in shock, hyper-realistic photography style, perfect lighting" },
-            { num: 3, he: "הנעל שגנבה את ההצגה", en: "Her shoe won the date", scene: "Romantic candlelit dinner, woman's high heel shoe has come alive with cartoon eyes and is drinking from the wine glass, the couple staring at it in complete shock, surreal but photorealistic, cinematic composition" },
-            { num: 4, he: "המלצר שהתאהב", en: "The waiter who fell in love", scene: "Restaurant scene, waiter on his knees proposing to the woman while her actual date sits there confused and angry, rose petals falling, other staff watching, photorealistic dramatic moment, movie scene quality" },
-            { num: 5, he: "הטלפון שלא הפסיק לצלצל", en: "The phone that never stopped", scene: "Romantic dinner, the man has 47 phones all ringing at once stacked on the table, the woman looking extremely annoyed, phones literally overflowing, photorealistic absurd comedy, bright restaurant lighting" },
-            { num: 6, he: "הגשם שהציל את הערב", en: "The rain that saved the night", scene: "Couple at outdoor restaurant, a tiny rain cloud ONLY above the man soaking just him, woman perfectly dry laughing, surreal but photorealistic style, dramatic contrast lighting" },
-            { num: 7, he: "הספגטי המפתיע", en: "The surprising spaghetti", scene: "Italian restaurant date, the spaghetti on the plate has formed into the shape of the woman's ex-boyfriend's face, both staring at it horrified, ultra realistic food photography meets horror" },
-            { num: 8, he: "כשהכלב ברח עם הארנק", en: "When the dog stole the wallet", scene: "Outdoor cafe date, a golden retriever running away in the background with a designer purse in mouth looking back mischievously, couple chasing, frozen action moment, photorealistic comedy" },
-            { num: 9, he: "המפגש המביך במעלית", en: "Elevator awkwardness", scene: "Cramped elevator, woman stuck between her current date and her ex-boyfriend, extreme awkward tension visible on all faces, photorealistic, dramatic overhead lighting, comedy of errors" },
-            { num: 10, he: "הסוד שנחשף בטעות", en: "The secret that slipped", scene: "Fancy restaurant, man with speech bubble showing wrong woman's name, his date's face transitioning from happy to furious, wine glass cracking from her grip, photorealistic dramatic moment" },
-        ];
+<script>
+// ============================================
+// 📚 FULL CHAPTERS DATABASE - 101+ chapters
+// ============================================
+const chapters = [
+    { num: 1, he: "דייט עם סבתא... ועם שלושה סלים", sub: "כשדייט הופך למשלוח", prompts: [
+        "Photorealistic scene: confused Israeli man in car, woman loading THREE huge wicker baskets into backseat like delivery service, his shocked face realizing this is not a date, afternoon sunlight, comedy moment",
+        "Cinematic shot: backseat filled with traditional wicker baskets, man's disappointed expression in rearview mirror, woman giving directions like Waze, urban Israeli street background",
+        "Viral meme style photo: man transformed into unwilling delivery driver, woman with shopping baskets treating him like Uber, the moment of WTF realization, bright daylight comedy"
+    ]},
+    { num: 2, he: "נפגשנו לפני רבע שעה - אבל כבר חודשיים ביחד", sub: "יין, צפונבוניות וחשבון 500₪", prompts: [
+        "Luxury beach bar at sunset, elegant woman surrounded by SEVEN empty wine glasses, shocked man looking at bill showing 500 shekels, golden hour lighting, Tel Aviv vibes",
+        "Photorealistic: fancy seaside restaurant, tower of empty wine glasses on table, woman ordering more while man's jaw drops at the check, Mediterranean sunset",
+        "Comedy disaster: sophisticated woman completely unbothered by mountain of drinks, man calculating expenses with horror, beach bar romantic setting turned nightmare"
+    ]},
+    { num: 3, he: "הצפרדע, המפתחות ומרינה", sub: "רכבים שלא עומדים בסטנדרטים", prompts: [
+        "Woman frantically opening EVERY compartment in man's car - glove box, doors, console - searching for place for keys, his horrified expression, highway background",
+        "Photorealistic: judgmental woman inspecting modest car interior with disgust, man embarrassed, she's asking 'this is what they give you in high-tech?'",
+        "Cinematic moment: woman's hands opening car storage spaces one by one, man's face transitioning from hope to despair, road to Herzliya Marina visible"
+    ]},
+    { num: 4, he: "יש לך שיניים יפות (וזהו)", sub: "כשמחמאה היא כל מה שנשאר", prompts: [
+        "Split screen: LEFT romantic bar date with chemistry, RIGHT next morning man checking phone showing text 'You have nice teeth' only, disappointed face",
+        "Man staring at phone screen with single message 'nice teeth', his confused expression, morning coffee getting cold, the anticlimactic moment",
+        "Photorealistic: hopeful man reading underwhelming text message about his teeth, flashback bubble showing romantic date, comedy of expectations vs reality"
+    ]},
+    { num: 5, he: "הוליווד אקספרס", sub: "וגאס, תשוקה, וצה״ל שהרס הכל", prompts: [
+        "Israeli guy in Hollywood villa jacuzzi, palm trees and hills view, phone showing 'MOM + IDF CALLING', his face going from paradise to panic",
+        "Las Vegas pool party luxury, young man living the dream, suddenly military notification on phone ruins everything, dramatic contrast",
+        "Photorealistic: Hollywood mansion pool, Israeli tourist's perfect moment shattered by army callback, stripper pole in background, comedy disaster"
+    ]},
+    { num: 6, he: "אהבה בקומה 42", sub: "דירות יוקרה ותשוקה", prompts: [
+        "Luxury empty penthouse, sexy real estate agent with FOR SALE sign, floor-to-ceiling windows with city view, romantic tension, modern design",
+        "Photorealistic: Tel Aviv tower apartment showing, attractive agent and client alone, Persian carpet, the moment before something happens",
+        "Cinematic: high-rise empty apartment, city lights through windows, real estate showing turned romantic, professional meets personal"
+    ]},
+    { num: 7, he: "אני מבינה הכל", sub: "כששפת הגוף מדברת אבל המילים חסרות", prompts: [
+        "Beautiful Russian woman nodding and smiling while Israeli man talks with dramatic hand gestures, speech bubble showing complex Hebrew, her bubble just says 'I understand everything'",
+        "Romantic Dead Sea backdrop, language barrier comedy, she keeps nodding without understanding, he keeps talking without noticing",
+        "Photorealistic: couple on date, clear communication gap, her confident 'I understand' expression while completely lost, desert landscape"
+    ]},
+    { num: 8, he: "בין קבלה לאיחור", sub: "איחורים כרוניים ורוחניות", prompts: [
+        "Man asleep on couch, clock showing 2 HOURS passed, woman finally arriving at door with red Kabbalah string bracelet, expired movie tickets on table",
+        "Photorealistic: exhausted boyfriend waiting, spiritual girlfriend arriving super late with mystical books, the patience limit reached",
+        "Comedy scene: him surrounded by empty coffee cups waiting, her floating in with Kabbalah center energy, completely unaware of time"
+    ]},
+    { num: 9, he: "אהבה בשפה זרה", sub: "גוגל טרנסלייט וכימיה", prompts: [
+        "Romantic beach date, couple communicating through phones with Google Translate between them, both typing simultaneously, sunset, tortilla cooking on camp stove",
+        "Photorealistic: language barrier romance at sea, phones as translators, confused but happy expressions, Mediterranean beach setting",
+        "Cinematic: two people falling for each other despite no common language, technology bridging the gap, waves crashing romantic backdrop"
+    ]},
+    { num: 10, he: "רוח סערה מרחוב הארבעה", sub: "ריקוד לוהט ואופנוע", prompts: [
+        "Tel Aviv nightclub, couple in passionate tango frozen mid-dance, neon lights, smoke machine, then CUT TO same woman cold and distant on motorcycle next day",
+        "Split image: fiery dance floor connection vs. ice cold coffee date, same woman two personalities, club vs cafe contrast",
+        "Photorealistic: intense club moment with mysterious woman, then awkward silent date, the magic that disappeared with the night"
+    ]},
+    { num: 11, he: "הטיטאניק שלי טבעה בחניה", sub: "סאונדטרק רומנטי ואכזבה", prompts: [
+        "Couple in car with romantic movie playing, parking lot setting, Titanic soundtrack moment ruined by mundane reality, comedy of expectations",
+        "Photorealistic: romantic movie scene recreation attempt in parking lot, everything going wrong, she's not impressed",
+        "Cinematic parody: man trying to create movie magic in his Honda, woman's unimpressed face, parking lot romance fail"
+    ]},
+    { num: 12, he: "אהבה, ניקוטין והאלמנה השחורה", sub: "סיגריות וקשר שנמוג בעשן", prompts: [
+        "Mysterious woman in black smoking dramatically, tragic backstory visible in her eyes, man captivated but doomed, noir lighting",
+        "Photorealistic: femme fatale energy, cigarette smoke swirling, dark romantic atmosphere, relationship fading like smoke",
+        "Cinematic noir: widow in elegant black, addiction and attraction, the relationship dissolving, moody dramatic lighting"
+    ]},
+    { num: 13, he: "כבר אמרתי פולניה?", sub: "סופ״ש בפולין בימי קורונה", prompts: [
+        "Couple in huge Polish hotel bed, shopping bags everywhere, COVID masks nearby, cultural disconnect visible, winter through window",
+        "Photorealistic: pandemic romance in Poland, giant European bed, duty-free shopping haul, awkward international dating",
+        "Travel comedy: Israeli in Polish hotel, everything supersized and foreign, girlfriend unimpressed, snow outside"
+    ]},
+    { num: 14, he: "דייט בחשיכה", sub: "לא זיהיתי אפילו את עצמי", prompts: [
+        "Pitch black restaurant, hands searching for food, candles as only light, mysterious dining experience, blind date literally",
+        "Photorealistic: dark dining concept, faces barely visible, the awkwardness of eating without seeing, romantic experiment gone weird",
+        "Cinematic: shadows and candlelight, sensory dating experience, comedy of trying to be romantic in complete darkness"
+    ]},
+    { num: 15, he: "דייט לוהט מדי", sub: "הדייט שעלה באש", prompts: [
+        "Literal fire at restaurant table, date night disaster, flames from candle spreading, couple's shocked faces, waiters rushing with extinguishers",
+        "Photorealistic: romantic dinner turned fire emergency, tablecloth burning, the date that literally went up in flames",
+        "Comedy disaster: everything on fire except their love (which also died), restaurant chaos, fire extinguisher foam everywhere"
+    ]},
+    { num: 16, he: "המרוקאית והדג החריף", sub: "אשש!", prompts: [
+        "Moroccan restaurant, woman eating incredibly spicy fish without flinching, man dying from one bite, cultural food challenge",
+        "Photorealistic: spicy food showdown, her totally fine, him red-faced and sweating, traditional Moroccan setting",
+        "Comedy food scene: cultural clash over spice tolerance, he's drinking all the water, she's ordering more"
+    ]},
+    { num: 17, he: "שלישיה בשישי", sub: "אה רגע, ביום שלישי!", prompts: [
+        "Calendar confusion comedy, man showing up on wrong day, woman not there, empty restaurant table with reservation sign",
+        "Photorealistic: day mix-up disaster, alone at table for two, checking phone frantically, embarrassed expression",
+        "Comedy of errors: Tuesday vs Friday confusion, awkward solo dining, the miscommunication catastrophe"
+    ]},
+    { num: 18, he: "טוסט יבש וקציצה קרה", sub: "ארוחת בוקר מאכזבת", prompts: [
+        "Depressing breakfast plate: dry toast, cold meatball, worst morning-after meal, disappointed face, harsh morning light",
+        "Photorealistic: sad breakfast scene, the romance died overnight, unappetizing food matching dead chemistry",
+        "Anti-romantic morning: pathetic plate of food, regret visible on faces, morning after disaster"
+    ]},
+    { num: 19, he: "ליוויתן בא לביקור", sub: "הפתעה גדולה", prompts: [
+        "Unexpected large surprise at door, oversized visitor, shocked expression, apartment suddenly too small, comedy of scale",
+        "Photorealistic: something enormous showing up uninvited, the WTF moment, cramped apartment meeting something huge",
+        "Surreal comedy: leviathan-sized surprise, regular apartment, impossible situation, exaggerated reactions"
+    ]},
+    { num: 20, he: "הדייט שהזמין אותי - לשלם", sub: "הפוך על הפוך", prompts: [
+        "Role reversal: woman who invited him now pointing at bill expectantly, man's shocked face, fancy restaurant setting",
+        "Photorealistic: she asked him out, she picked the place, she's pointing at the check for HIM, modern dating absurdity",
+        "Comedy scene: confident woman, confused man with wallet out, the table turned completely, who pays now?"
+    ]},
+    { num: 21, he: "אגם ברמת גן", sub: "רומנטיקה עירונית", prompts: [
+        "Ramat Gan National Park lake, urban romance attempt, paddle boats, families everywhere ruining mood, city park date",
+        "Photorealistic: trying to be romantic at municipal park, kids screaming, ice cream melting, suburban love attempt",
+        "Comedy: romantic lake expectations vs reality of crowded park, pedal boat traffic jam, unromantic urban nature"
+    ]},
+    { num: 22, he: "הונגריה בדרייב אין", sub: "קולנוע ואהבה", prompts: [
+        "Drive-in movie date, Hungarian film neither understands, fogged windows, retro romantic setting, subtitle confusion",
+        "Photorealistic: car at outdoor cinema, foreign film playing, couple more focused on each other than subtitles",
+        "Cinematic: classic drive-in romance, language barrier with movie, making own entertainment in car"
+    ]},
+    { num: 23, he: "קייב זה כאן", sub: "רק בלי תרגום", prompts: [
+        "Ukrainian woman, Israeli man, zero language overlap, hand gestures conversation, frustration and attraction mix",
+        "Photorealistic: communication through pointing and miming, no common words, chemistry despite barriers",
+        "Comedy of miscommunication: drawing pictures to talk, phone translators failing, romance finding a way"
+    ]},
+    { num: 24, he: "רוח דרומית ולילה סוער", sub: "סערת רגשות", prompts: [
+        "Stormy night, southern wind blowing, passionate encounter, weather matching emotions, dramatic atmosphere",
+        "Photorealistic: wind-swept romantic scene, desert storm energy, intense connection, wild night",
+        "Cinematic: weather as metaphor, stormy emotions, southern passion, dramatic skies and drama below"
+    ]},
+    { num: 25, he: "החתלתולה מרוטשילד", sub: "חיות וחיזורים", prompts: [
+        "Cute kitten on Rothschild Boulevard Tel Aviv, using cat to pick up women, hipster neighborhood, trendy street",
+        "Photorealistic: man with adorable cat as dating prop, women stopping to pet, Rothschild trees background",
+        "Comedy: weaponized cuteness, strategic pet ownership, the kitten is the real star, boulevard setting"
+    ]},
+    { num: 26, he: "הווגינה שהרסה לי את הדייט", sub: "TMI מהרגע הראשון", prompts: [
+        "First date, woman oversharing medical details, man's horrified face, too much information, coffee going cold from shock",
+        "Photorealistic: awkward café moment, inappropriate conversation topic, his face frozen in discomfort",
+        "Comedy disaster: first meeting TMI bomb, him trying to escape, her completely oblivious, cringe maximum"
+    ]},
+    { num: 27, he: "נעצרת בגלל פנטזיה", sub: "כשדמיון פוגש מציאות", prompts: [
+        "Fantasy vs reality clash, imagination bubble popping, expectations meeting disappointing truth, visual metaphor",
+        "Photorealistic: dream scenario crashing into real world, the moment fantasy dies, comedy of expectations",
+        "Split screen: imagined perfect date vs actual awkward reality, the gap between hope and truth"
+    ]},
+    { num: 28, he: "הינשוף בחניה והלב השבור", sub: "לילה מוזר", prompts: [
+        "Parking lot at night, actual owl watching over heartbreak scene, surreal breakup moment, bird witness",
+        "Photorealistic: owl on streetlight, couple ending things below, nature observing human drama, dark parking lot",
+        "Cinematic weird: nocturnal bird as breakup audience, car headlights, the strangest ending ever"
+    ]},
+    { num: 29, he: "סיפורי סבתא", sub: "שלא מספרים לילדים", prompts: [
+        "Grandmother with knowing smile, stories too spicy to share, scandalized younger listener, family secrets energy",
+        "Photorealistic: elderly woman with mischievous expression, implying wild past, shocked grandchild, tea time reveal",
+        "Comedy: generation gap, grandmother's inappropriate stories, the listener can't unhear things, family gathering chaos"
+    ]},
+    { num: 30, he: "הבר, הג׳ינג׳ית והברווזים", sub: "סיפור שלא יישכח", prompts: [
+        "Bar scene with redhead woman, actual ducks somehow involved, absurdist comedy, unforgettable weird night",
+        "Photorealistic: regular bar but ducks are there, ginger woman in the middle, everyone confused, surreal situation",
+        "Comedy chaos: birds in bar, redheaded mystery woman, the night that made no sense but was perfect"
+    ]},
+    { num: 55, he: "הדייט שהפך למרדף אחרי תוכי", sub: "משוגע לגמרי", prompts: [
+        "Couple chasing escaped parrot through city streets, bird flying ahead mockingly, absurd date activity",
+        "Photorealistic: colorful parrot on the run, man and woman in pursuit, people staring, urban bird chase",
+        "Comedy action: date turned safari, exotic bird escape, the worst pet timing, running through traffic after parrot"
+    ]},
+    { num: 69, he: "סמי השחף והקיבוצניקית מפלמחים", sub: "ציפורים ויחסים", prompts: [
+        "Seagull stealing food from date, kibbutz woman unfazed, beach restaurant chaos, bird attack comedy",
+        "Photorealistic: aggressive seagull mid-theft, woman from kibbutz calmly handling it, man panicking, seaside dining disaster",
+        "Nature vs date: seagull as third wheel, kibbutznik survival skills, beach romance with wildlife interruption"
+    ]},
+    { num: 91, he: "User Experience רומנטי", sub: "כנס הייטק ורגשות", prompts: [
+        "Tech conference romance, UX designer flirting using industry jargon, laptops and attraction, startup energy",
+        "Photorealistic: conference booth meeting, professional attraction, screens everywhere, high-tech love connection",
+        "Comedy: dating using tech terminology, interface design pickup lines, the nerdiest romance, convention center setting"
+    ]},
+    { num: 92, he: "הקבוצה הסודית", sub: "גברים על ספה אחת", prompts: [
+        "Men's therapy group on couch, emotional breakthrough moment, unexpected encounter with date there too",
+        "Photorealistic: vulnerability circle, men sharing feelings, awkward recognition of someone you're dating",
+        "Comedy drama: support group meets dating life, the worst place to see your date, couch therapy session"
+    ]},
+    { num: 93, he: "ספיד דייטינג בפ״ת", sub: "שבע דקות גיהנום", prompts: [
+        "Speed dating event in Petah Tikva, timer showing 7 minutes, desperate faces, rotating tables chaos",
+        "Photorealistic: community center speed dating, awkward rapid conversations, bell about to ring, suburban dating hell",
+        "Comedy: speed dating horror, watching clock, bad matches cycling through, the longest 7 minutes ever"
+    ]},
+    { num: 94, he: "Here 4 Iguana", sub: "אפליקציה חדשה ודייטים בזמן אמת 🦎", prompts: [
+        "Dating app with iguana mascot logo, phone showing nearby matches, bar scene, revolutionary proximity dating",
+        "Photorealistic: smartphone with iguana app interface, real-time matches at venue, modern dating technology",
+        "Tech meets romance: lizard-themed dating app in action, people actually meeting in person, venue-based matching magic"
+    ]},
+    { num: 95, he: "המועדון, הדיכאון והדיג׳יי", sub: "מסיבת גרושים מהגיהנום", prompts: [
+        "Divorced people party, sad DJ playing, attempts at fun failing, midlife crisis dance floor",
+        "Photorealistic: depressing divorcee event, bad music, forced smiles, club trying too hard",
+        "Comedy tragedy: singles night gone wrong, terrible DJ, everyone pretending to have fun, fake engagement for escape"
+    ]},
+    { num: 96, he: "אהבה בצל AI", sub: "כשהאלגוריתם פוגש את חני מחולון", prompts: [
+        "Futuristic dating scene, AI matchmaking screens, woman from Holon meets algorithm's choice, tech romance",
+        "Photorealistic: AI dating interface, matched couple meeting, robot cupid energy, modern love tech",
+        "Sci-fi comedy: artificial intelligence playing matchmaker, skeptical woman, computer knows best?, digital love"
+    ]},
+    { num: 97, he: "היא הגיבה לי בלייק - החתול שלה לא", sub: "פייסבוק וחתולים", prompts: [
+        "Facebook dating match, her cat clearly disapproving from background, pet veto on relationship, social media romance",
+        "Photorealistic: couple's selfie with judgmental cat, animal not approving, online dating meets real life pet",
+        "Comedy: cat as relationship decider, woman liked him but cat says no, feline blocking love"
+    ]},
+    { num: 98, he: "חתונה, קרחנה ומה שביניהם", sub: "וודקה וריקודים", prompts: [
+        "Wedding party, bald spot visible while dancing, vodka flowing, Israeli wedding chaos, celebration energy",
+        "Photorealistic: wedding reception drunk dancing, unflattering moment captured, family celebration gone wild",
+        "Comedy: wedding as dating venue, too much vodka, embarrassing dance moves, someone's mom stealing the show"
+    ]},
+    { num: 99, he: "טנטרה או טראומה", sub: "נשימות וחומוס טבעוני", prompts: [
+        "Tantric workshop gone wrong, breathing exercises, vegan hummus break, spiritual dating attempt disaster",
+        "Photorealistic: new age class, meditation circles, uncomfortable participants, alternative dating scene",
+        "Comedy: trying too hard to be spiritual, fake enlightenment, hummus as relationship counseling, workshop weirdness"
+    ]},
+    { num: 100, he: "אסקי, הילדים, והבחורה במבצע", sub: "סוף עונה", prompts: [
+        "Go-kart date with kids involved, sale shopping woman, dog named Aski running around, chaos family outing",
+        "Photorealistic: karting track with children as matchmakers, woman with shopping bags, dog complicating everything",
+        "Comedy: dating with kids present, bargain hunter date, pet and children creating chaos, unconventional romance"
+    ]},
+    { num: 101, he: "הפרק שאת קוראת הוא עלייך", sub: "יעל, קפה, והדייט שסגר מעגל", prompts: [
+        "Meta moment: woman reading this book on date, coffee shop, full circle story, book within story",
+        "Photorealistic: person reading '101 Dates' book at café, recognizing themselves in story, breaking fourth wall",
+        "Cinematic: the final date, coffee shop meeting, book as conversation starter, everything coming together perfectly"
+    ]},
+    { num: "X", he: "ט״ו באב, טינדר ונסיכת ההפתעות", sub: "פרק בונוס עם טוויסט", prompts: [
+        "Tu B'Av Israeli valentine, Tinder match surprise, unexpected twist ending, romantic holiday plot twist",
+        "Photorealistic: love holiday celebration, dating app showing match, the surprise reveal moment",
+        "Bonus chapter energy: holiday romance, app-based meeting, the twist no one expected, happy ending vibes"
+    ]}
+];
 
-        // Prompt enhancers for maximum bizarre but realistic effect
-        const styleEnhancers = [
-            "Ultra photorealistic, 8K quality, cinematic movie scene, dramatic lighting, professional photography, viral social media worthy, the moment right before disaster, faces showing genuine emotion",
-            "Hyper-realistic photography style, studio lighting, sharp focus, viral meme potential, awkward moment captured perfectly, expressions tell the whole story, magazine quality",
-            "Photorealistic digital art, cinematic composition, golden hour lighting, the exact moment of realization, genuine human reactions, could be a movie poster, ultra detailed faces",
-            "Professional photography quality, perfect timing capture, dramatic shadows, genuine shock and surprise on faces, storytelling through image, viral content style",
-            "Ultra realistic rendering, film still quality, expressive faces, comedy timing frozen in time, the moment everything went wrong, instagram-worthy disaster"
-        ];
+// Fill in generic prompts for chapters without specific ones
+for (let i = 31; i <= 90; i++) {
+    if (!chapters.find(c => c.num === i)) {
+        chapters.push({
+            num: i,
+            he: `פרק ${i}`,
+            sub: "עוד סיפור מטורף",
+            prompts: [
+                `Photorealistic Israeli dating disaster scene chapter ${i}, awkward moment captured, genuine expressions, comedy gold`,
+                `Cinematic dating fail moment, chapter ${i} visualization, real emotions, viral potential image`,
+                `Professional photo quality dating comedy scene ${i}, authentic reactions, relatable disaster`
+            ]
+        });
+    }
+}
 
-        let currentChapter = null;
-        let currentImagePrompt = "";
-        let generatedImages = [];
+// Sort chapters by number
+chapters.sort((a, b) => {
+    if (a.num === "X") return 1;
+    if (b.num === "X") return -1;
+    return a.num - b.num;
+});
 
-        // Tab switching
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+// ============================================
+// 🎮 APP LOGIC
+// ============================================
+let currentChapter = null;
+let selectedPromptIndex = null;
+let selectedPrompt = "";
+let selectedImageUrl = null;
+
+function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    if (tab === 'images') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('tab-images').classList.add('active');
+    } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('tab-video').classList.add('active');
+        if (selectedImageUrl) {
+            document.getElementById('selectedImageCard').style.display = 'block';
+            document.getElementById('selectedImagePreview').src = selectedImageUrl;
+        }
+    }
+}
+
+function pickRandomChapter() {
+    currentChapter = chapters[Math.floor(Math.random() * chapters.length)];
+    selectedPromptIndex = null;
+    selectedPrompt = "";
+    
+    // Show chapter
+    document.getElementById('step1').style.display = 'block';
+    document.getElementById('chapNum').textContent = `פרק ${currentChapter.num}`;
+    document.getElementById('chapTitle').textContent = currentChapter.he;
+    document.getElementById('chapSub').textContent = currentChapter.sub;
+    
+    // Show prompts
+    document.getElementById('step2').style.display = 'block';
+    const promptsContainer = document.getElementById('promptOptions');
+    promptsContainer.innerHTML = currentChapter.prompts.map((p, idx) => `
+        <div class="prompt-option" onclick="selectPrompt(${idx}, this)">
+            <div class="prompt-option-header">
+                <span class="prompt-number">${idx + 1}</span>
+                <span class="prompt-style">${['🎬 קולנועי', '📸 ריאליסטי', '😂 קומי'][idx] || 'סגנון ' + (idx+1)}</span>
+            </div>
+            <p class="prompt-text">${p}</p>
+        </div>
+    `).join('');
+    
+    // Reset generate button
+    document.getElementById('generateBtn').disabled = true;
+    document.getElementById('generateBtn').textContent = '👆 בחר פרומפט קודם';
+    
+    // Hide other steps
+    document.getElementById('step3').style.display = 'none';
+    document.getElementById('step4').style.display = 'none';
+    
+    // Update descriptions
+    document.getElementById('descHe').textContent = `${currentChapter.he} 😂 #דייטים #מהלעזאזל #101דייטים #funnydates`;
+    document.getElementById('descEn').textContent = `Dating disaster chapter ${currentChapter.num} 😂 #dating #wtf #viral #funnydates101`;
+    
+    // Scroll
+    document.getElementById('step1').scrollIntoView({ behavior: 'smooth' });
+}
+
+function selectPrompt(idx, element) {
+    document.querySelectorAll('.prompt-option').forEach(p => p.classList.remove('selected'));
+    element.classList.add('selected');
+    selectedPromptIndex = idx;
+    selectedPrompt = currentChapter.prompts[idx];
+    
+    document.getElementById('generateBtn').disabled = false;
+    document.getElementById('generateBtn').textContent = '🚀 צור 4 תמונות!';
+}
+
+function generate4Images() {
+    if (!selectedPrompt) return;
+    
+    // Show loading
+    document.getElementById('step3').style.display = 'block';
+    document.getElementById('step4').style.display = 'none';
+    document.getElementById('step3').scrollIntoView({ behavior: 'smooth' });
+    
+    // Generate 4 different seeds
+    const seeds = [
+        Math.floor(Math.random() * 999999),
+        Math.floor(Math.random() * 999999),
+        Math.floor(Math.random() * 999999),
+        Math.floor(Math.random() * 999999)
+    ];
+    
+    const encoded = encodeURIComponent(selectedPrompt);
+    const urls = seeds.map(s => `https://image.pollinations.ai/prompt/${encoded}?width=1024&height=1024&nologo=true&seed=${s}`);
+    
+    const grid = document.getElementById('imagesGrid');
+    grid.innerHTML = '';
+    let loaded = 0;
+    
+    urls.forEach((url, idx) => {
+        const img = new Image();
+        img.onload = () => {
+            loaded++;
+            const div = document.createElement('div');
+            div.className = 'image-option';
+            div.onclick = () => selectImage(url, div);
+            div.innerHTML = `
+                <span class="num">${idx + 1}</span>
+                <img src="${url}">
+                <button class="dl-btn" onclick="downloadImg('${url}', ${idx + 1}); event.stopPropagation();">💾 הורד</button>
+            `;
+            grid.appendChild(div);
             
-            if (tab === 'images') {
-                document.querySelector('.tab-btn:first-child').classList.add('active');
-                document.getElementById('tab-images').classList.add('active');
-            } else {
-                document.querySelector('.tab-btn:last-child').classList.add('active');
-                document.getElementById('tab-video').classList.add('active');
-                updateVideoTab();
+            if (loaded >= 2) {
+                document.getElementById('step3').style.display = 'none';
+                document.getElementById('step4').style.display = 'block';
             }
+        };
+        img.onerror = () => { loaded++; };
+        img.src = url;
+    });
+    
+    // Timeout
+    setTimeout(() => {
+        document.getElementById('step3').style.display = 'none';
+        if (grid.children.length > 0) {
+            document.getElementById('step4').style.display = 'block';
         }
+    }, 60000);
+}
 
-        // Generate image with Pollinations.ai (FREE!)
-        async function generateImage() {
-            // Select random chapter
-            currentChapter = chapters[Math.floor(Math.random() * chapters.length)];
-            
-            // Show chapter
-            document.getElementById('chapterCard').style.display = 'block';
-            document.getElementById('chapterNumber').textContent = `פרק ${currentChapter.num}`;
-            document.getElementById('chapterTitleHe').textContent = currentChapter.he;
-            document.getElementById('chapterTitleEn').textContent = `🎭 ${currentChapter.en}`;
-            
-            // Generate crazy prompt
-            regeneratePrompt();
-            
-            // Show prompt card
-            document.getElementById('imagePromptCard').style.display = 'block';
-            
-            // Show loading
-            document.getElementById('loadingCard').style.display = 'block';
-            document.getElementById('imageResultCard').style.display = 'none';
-            
-            // Update status
-            document.getElementById('statusReady').textContent = 'יוצר...';
-            document.getElementById('statusReady').classList.remove('ready');
-            document.getElementById('statusReady').classList.add('pending');
-            
-            // Scroll to loading
-            document.getElementById('loadingCard').scrollIntoView({ behavior: 'smooth' });
-            
-            // Generate with Pollinations.ai
-            try {
-                const encodedPrompt = encodeURIComponent(currentImagePrompt);
-                const seed = Math.floor(Math.random() * 1000000);
-                const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${seed}`;
-                
-                // Set timeout for 45 seconds
-                const timeoutId = setTimeout(() => {
-                    document.getElementById('loadingCard').style.display = 'none';
-                    if (!document.getElementById('generatedImage').src) {
-                        alert('⏱️ הטעינה לוקחת יותר מדי זמן.\n\nנסה:\n1. לחץ "פרומפט אחר"\n2. נסה שוב');
-                    }
-                }, 45000);
-                
-                // Preload image
-                const img = new Image();
-                img.onload = function() {
-                    clearTimeout(timeoutId);
-                    document.getElementById('loadingCard').style.display = 'none';
-                    document.getElementById('generatedImage').src = imageUrl;
-                    document.getElementById('imageResultCard').style.display = 'block';
-                    document.getElementById('statusReady').textContent = 'מוכן!';
-                    document.getElementById('statusReady').classList.add('ready');
-                    document.getElementById('statusReady').classList.remove('pending');
-                    document.getElementById('statusImage').textContent = '✅';
-                    
-                    // Save to history
-                    generatedImages.push({
-                        url: imageUrl,
-                        chapter: currentChapter,
-                        prompt: currentImagePrompt
-                    });
-                    
-                    // Scroll to result
-                    document.getElementById('imageResultCard').scrollIntoView({ behavior: 'smooth' });
-                };
-                img.onerror = function() {
-                    clearTimeout(timeoutId);
-                    document.getElementById('loadingCard').style.display = 'none';
-                    alert('❌ שגיאה ביצירת התמונה.\n\nנסה:\n1. לחץ "פרומפט אחר"\n2. נסה שוב');
-                };
-                img.src = imageUrl;
-                
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('loadingCard').style.display = 'none';
-                alert('❌ שגיאה: ' + error.message);
-            }
-        }
+function selectImage(url, element) {
+    document.querySelectorAll('.image-option').forEach(o => o.classList.remove('selected'));
+    element.classList.add('selected');
+    selectedImageUrl = url;
+}
 
-        function regeneratePrompt() {
-            if (!currentChapter) return;
-            const enhancer = styleEnhancers[Math.floor(Math.random() * styleEnhancers.length)];
-            currentImagePrompt = `${currentChapter.scene}, ${enhancer}`;
-            document.getElementById('imagePrompt').textContent = currentImagePrompt;
-        }
+function downloadImg(url, num) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `funnydates-ch${currentChapter?.num || 'X'}-opt${num}.png`;
+    a.target = '_blank';
+    a.click();
+}
 
-        function downloadImage() {
-            const img = document.getElementById('generatedImage');
-            const link = document.createElement('a');
-            link.href = img.src;
-            link.download = `funnydates-chapter-${currentChapter?.num || 'image'}-${Date.now()}.png`;
-            link.target = '_blank';
-            link.click();
-            alert('💾 התמונה נפתחת בחלון חדש - לחץ ימני ושמור!');
-        }
+function downloadSelectedImage() {
+    if (selectedImageUrl) {
+        const a = document.createElement('a');
+        a.href = selectedImageUrl;
+        a.download = `funnydates-chapter-${currentChapter?.num || 'X'}.png`;
+        a.target = '_blank';
+        a.click();
+    }
+}
 
-        // Copy functions
-        function copyPrompt(elementId) {
-            const text = document.getElementById(elementId).textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✅ הועתק!';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
-        }
+function selectVideoStyle(idx, element) {
+    document.querySelectorAll('.video-style-option').forEach(o => o.classList.remove('selected'));
+    element.classList.add('selected');
+}
 
-        // Video tab functions
-        function updateVideoTab() {
-            const selector = document.getElementById('imageSelector');
-            if (generatedImages.length === 0) {
-                selector.innerHTML = `
-                    <div class="image-option" onclick="switchTab('images')">
-                        <div class="image-placeholder">➕</div>
-                        <div>צור תמונה חדשה</div>
-                        <small style="color: var(--text-secondary);">עבור לטאב תמונות</small>
-                    </div>
-                `;
-            } else {
-                selector.innerHTML = generatedImages.slice(-3).map((img, idx) => `
-                    <div class="image-option" onclick="selectImage(${idx})">
-                        <img src="${img.url}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
-                        <div>פרק ${img.chapter.num}</div>
-                        <small style="color: var(--text-secondary)">${img.chapter.he}</small>
-                    </div>
-                `).join('') + `
-                    <div class="image-option" onclick="switchTab('images')">
-                        <div class="image-placeholder">➕</div>
-                        <div>צור תמונה חדשה</div>
-                    </div>
-                `;
-            }
-        }
+function copyVidPrompt(idx) {
+    const text = document.getElementById(`vidPrompt${idx}`).textContent;
+    navigator.clipboard.writeText(text);
+    alert('✅ פרומפט הוידאו הועתק!');
+}
 
-        let selectedImageIdx = null;
-        let selectedVideoStyle = null;
-
-        function selectImage(idx) {
-            document.querySelectorAll('.image-option').forEach(opt => opt.classList.remove('selected'));
-            document.querySelectorAll('.image-option')[idx].classList.add('selected');
-            selectedImageIdx = idx;
-            
-            // Update video prompts based on selected image
-            if (generatedImages[idx]) {
-                updateVideoPrompts(generatedImages[idx].chapter);
-            }
-        }
-
-        function updateVideoPrompts(chapter) {
-            const container = document.getElementById('videoPromptsContainer');
-            const prompts = [
-                {
-                    name: "🎬 קולנועי/דרמטי",
-                    text: `Cinematic slow motion, camera slowly pushes in on the scene, dramatic orchestral music feeling, faces frozen in the moment of realization, shallow depth of field, film grain, movie trailer quality, emotional impact, 4K cinematic`
-                },
-                {
-                    name: "😂 קומדיה/מצחיק",
-                    text: `Comedy timing, quick zoom on shocked faces, sitcom style camera work, reaction shots, perfect comedic pause, bright cheerful lighting despite disaster, upbeat energy, TikTok viral style, funny moment captured`
-                },
-                {
-                    name: "📱 וויראלי/סושיאל",
-                    text: `Social media viral style, POV camera angle, shaky realistic footage, reaction video quality, "you won't believe what happened" energy, authentic moment captured, Instagram Reels style, relatable disaster`
-                }
-            ];
-            
-            container.innerHTML = prompts.map((p, idx) => `
-                <div class="video-prompt-option" onclick="selectVideoPrompt(${idx})">
-                    <div class="prompt-option-header">
-                        <span class="prompt-option-number">${idx + 1}</span>
-                        <span class="prompt-option-style">${p.name}</span>
-                    </div>
-                    <p class="prompt-text" id="videoPrompt${idx}">${p.text}</p>
-                    <button class="copy-btn" onclick="copyPrompt('videoPrompt${idx}'); event.stopPropagation();">📋</button>
-                </div>
-            `).join('');
-            
-            // Update descriptions
-            document.getElementById('descHe').textContent = `${chapter.he} 😂 #דייטים #סיפורים_מטורפים #101דייטים #funnydates #מה_ראיתי_עכשיו`;
-            document.getElementById('descEn').textContent = `${chapter.en} 😂 #dating #datingfail #wtf #viral #funnydates`;
-        }
-
-        function selectVideoPrompt(idx) {
-            document.querySelectorAll('.video-prompt-option').forEach(opt => opt.classList.remove('selected'));
-            document.querySelectorAll('.video-prompt-option')[idx].classList.add('selected');
-            selectedVideoStyle = idx;
-        }
-
-        function copyAllForPixVerse() {
-            if (selectedVideoStyle === null) {
-                alert('⚠️ בחר סגנון וידאו קודם!');
-                return;
-            }
-            
-            const prompt = document.getElementById(`videoPrompt${selectedVideoStyle}`).textContent;
-            navigator.clipboard.writeText(prompt).then(() => {
-                alert('✅ הפרומפט הועתק!\\n\\n📌 כעת:\\n1. פתח את Pix Verse\\n2. העלה את התמונה\\n3. הדבק את הפרומפט\\n4. צור וידאו מדהים!');
-            });
-        }
-    </script>
+function copyDesc(lang) {
+    const text = document.getElementById(lang === 'he' ? 'descHe' : 'descEn').textContent;
+    navigator.clipboard.writeText(text);
+    alert('✅ הועתק!');
+}
+</script>
 </body>
 </html>
