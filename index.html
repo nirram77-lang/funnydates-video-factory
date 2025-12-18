@@ -46,6 +46,18 @@
             margin-bottom: 30px;
         }
 
+        /* Free badge */
+        .free-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
         .header h1 {
             font-size: 2.5rem;
             font-weight: 900;
@@ -621,7 +633,13 @@
         <header class="header">
             <h1>FunnyDates Video Factory V5.0 🎬</h1>
             <p>מערכת הפקת תמונות וסרטונים אוטומטית</p>
-            <span class="version-badge">✨ HOLLYWOOD EDITION ✨</span>
+            <div style="margin-top: 15px;">
+                <span class="free-badge">🆓 חינם לגמרי!</span>
+                <span class="version-badge">✨ HOLLYWOOD EDITION ✨</span>
+            </div>
+            <p style="color: var(--accent-green); margin-top: 10px; font-size: 0.9rem;">
+                Powered by Pollinations.ai - ללא הגבלה, ללא רישום
+            </p>
         </header>
 
         <!-- Tabs -->
@@ -638,24 +656,18 @@
 
         <!-- Tab 1: Images -->
         <div id="tab-images" class="tab-content active">
-            <!-- Settings -->
-            <div class="card">
-                <h2 class="card-title">⚙️ הגדרות</h2>
-                <div class="settings-grid">
-                    <div class="setting-item">
-                        <label class="setting-label">🔑 Replicate API Token</label>
-                        <input type="password" id="apiToken" class="setting-input" placeholder="r8_xxxxxxxx...">
-                    </div>
-                    <div class="setting-item">
-                        <label class="setting-label">🌐 Vercel Backend URL</label>
-                        <input type="text" id="backendUrl" class="setting-input" value="7-8391s-projects.vercel.app" dir="ltr">
-                    </div>
-                </div>
-                <div class="buttons-row">
-                    <button class="btn btn-success" onclick="saveSettings()">💾 שמור הגדרות</button>
-                    <button class="btn btn-warning" onclick="testConnection()">⚡ בדוק חיבור</button>
-                    <button class="btn btn-primary" id="statusBtn">✅ מחובר</button>
-                </div>
+            <!-- Info Card -->
+            <div class="card" style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(34, 197, 94, 0.1)); border-color: var(--accent-green);">
+                <h2 class="card-title">🆓 יצירת תמונות חינם!</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 10px;">
+                    המערכת משתמשת ב-<strong style="color: var(--accent-green);">Pollinations.ai</strong> - שירות AI חינמי לגמרי!
+                </p>
+                <ul style="color: var(--text-secondary); line-height: 2;">
+                    <li>✅ ללא הגבלת תמונות</li>
+                    <li>✅ ללא רישום או token</li>
+                    <li>✅ תמונות באיכות גבוהה</li>
+                    <li>✅ לחיצה אחת = תמונה מוכנה</li>
+                </ul>
             </div>
 
             <!-- Pipeline -->
@@ -697,9 +709,15 @@
                     </p>
                 </div>
                 <div class="buttons-row">
-                    <button class="btn btn-primary" onclick="generateWithReplicate()">🚀 צור תמונה ב-Replicate</button>
                     <button class="btn btn-outline" onclick="regeneratePrompt()">🔄 פרומפט אחר</button>
                 </div>
+            </div>
+
+            <!-- Loading -->
+            <div class="card" id="loadingCard" style="display: none; text-align: center;">
+                <div class="loading" style="width: 60px; height: 60px; margin: 20px auto;"></div>
+                <h2 style="color: var(--accent-purple);">🎨 יוצר תמונה מטורפת...</h2>
+                <p style="color: var(--text-secondary);">זה לוקח כ-10-20 שניות</p>
             </div>
 
             <!-- Generated Image -->
@@ -781,39 +799,10 @@
             <!-- Video Prompts -->
             <div class="card" id="videoPromptsCard">
                 <h2 class="card-title">🎥 בחר סגנון וידאו (3 אפשרויות)</h2>
-                <div class="video-prompts-container">
-                    <div class="video-prompt-option" onclick="selectVideoPrompt(1)">
-                        <div class="prompt-option-header">
-                            <span class="prompt-option-number">1</span>
-                            <span class="prompt-option-style">🌀 סוריאליסטי/חלומי</span>
-                        </div>
-                        <p class="prompt-text" id="videoPrompt1">
-                            Dreamlike slow motion, the giant shoe slowly descends crushing everything, wine glasses float upward defying gravity, camera slowly orbits the chaos, ethereal fog, dramatic lighting shifts from pink to blue, 4K cinematic, smooth dolly movement
-                        </p>
-                        <button class="copy-btn" onclick="copyPrompt('videoPrompt1'); event.stopPropagation();">📋</button>
-                    </div>
-
-                    <div class="video-prompt-option" onclick="selectVideoPrompt(2)">
-                        <div class="prompt-option-header">
-                            <span class="prompt-option-number">2</span>
-                            <span class="prompt-option-style">💥 דרמטי/אקשן</span>
-                        </div>
-                        <p class="prompt-text" id="videoPrompt2">
-                            Fast-paced action sequence, shoe smashes through table with explosive impact, glass shatters in slow-motion then speeds up, dramatic camera shake, quick cuts, neon lights flashing, intense energy, music video style, hyper-dynamic
-                        </p>
-                        <button class="copy-btn" onclick="copyPrompt('videoPrompt2'); event.stopPropagation();">📋</button>
-                    </div>
-
-                    <div class="video-prompt-option" onclick="selectVideoPrompt(3)">
-                        <div class="prompt-option-header">
-                            <span class="prompt-option-number">3</span>
-                            <span class="prompt-option-style">🎭 קומי/מצחיק</span>
-                        </div>
-                        <p class="prompt-text" id="videoPrompt3">
-                            Comedy timing, the shoe bounces cartoon-style, man's surprised face in exaggerated slow-mo, woman shrugs dramatically, wine spills in heart shape, sparkles and emojis float through scene, sitcom energy, playful camera movements
-                        </p>
-                        <button class="copy-btn" onclick="copyPrompt('videoPrompt3'); event.stopPropagation();">📋</button>
-                    </div>
+                <div class="video-prompts-container" id="videoPromptsContainer">
+                    <p style="color: var(--text-secondary); text-align: center; padding: 30px;">
+                        👆 בחר תמונה קודם כדי לראות את אפשרויות הוידאו
+                    </p>
                 </div>
             </div>
 
@@ -856,31 +845,30 @@
     <script>
         // Chapters data
         const chapters = [
-            { num: 1, he: "הדייט הראשון שהפך לסיוט", en: "First date nightmare" },
-            { num: 2, he: "כשהקינוח התפוצץ", en: "When dessert exploded" },
-            { num: 3, he: "הנעל שגנבה את ההצגה", en: "Her shoe won the date" },
-            { num: 4, he: "המלצר שהתאהב", en: "The waiter who fell in love" },
-            { num: 5, he: "הטלפון שלא הפסיק לצלצל", en: "The phone that never stopped" },
-            { num: 6, he: "הגשם שהציל את הערב", en: "The rain that saved the night" },
-            { num: 7, he: "הספגטי המפתיע", en: "The surprising spaghetti" },
-            { num: 8, he: "כשהכלב ברח עם הארנק", en: "When the dog stole the wallet" },
-            { num: 9, he: "המפגש המביך במעלית", en: "Elevator awkwardness" },
-            { num: 10, he: "הסוד שנחשף בטעות", en: "The secret that slipped" },
+            { num: 1, he: "הדייט הראשון שהפך לסיוט", en: "First date nightmare", hook: "When I thought it couldn't get worse" },
+            { num: 2, he: "כשהקינוח התפוצץ", en: "When dessert exploded", hook: "The souffle flew straight to his face" },
+            { num: 3, he: "הנעל שגנבה את ההצגה", en: "Her shoe won the date", hook: "Her stiletto became the star of the evening" },
+            { num: 4, he: "המלצר שהתאהב", en: "The waiter who fell in love", hook: "He brought his number instead of the bill" },
+            { num: 5, he: "הטלפון שלא הפסיק לצלצל", en: "The phone that never stopped", hook: "47 calls from my ex during dinner" },
+            { num: 6, he: "הגשם שהציל את הערב", en: "The rain that saved the night", hook: "Rain ruined my dress but saved me from a kiss" },
+            { num: 7, he: "הספגטי המפתיע", en: "The surprising spaghetti", hook: "Spaghetti landed on his white designer shirt" },
+            { num: 8, he: "כשהכלב ברח עם הארנק", en: "When the dog stole the wallet", hook: "His cute dog ran away with my purse" },
+            { num: 9, he: "המפגש המביך במעלית", en: "Elevator awkwardness", hook: "Stuck in elevator with my ex boyfriend" },
+            { num: 10, he: "הסוד שנחשף בטעות", en: "The secret that slipped", hook: "He called me by his ex girlfriend name" },
         ];
 
-        // Crazy image prompts templates
+        // Crazy image prompts templates - SURREALIST MODE
         const crazyPromptStyles = [
-            "Surrealist nightmare: {scene}, objects melting like Dalí clocks, impossible geometry, neon pink and electric blue, fish wearing tuxedos floating through air, moon is a giant emoji, dripping with gold honey, hyper-detailed chaos, 8K dreamscape",
-            "Fever dream aesthetic: {scene}, everything made of candy and chrome, gravity is broken, people have multiple heads, ceiling is actually the floor, raining diamonds and eyeballs, vaporwave colors, glitch effects, maximum absurdity",
-            "Psychedelic dating disaster: {scene}, fractal patterns everywhere, faces splitting into kaleidoscopes, wine transforms into galaxies, furniture comes alive with cartoon eyes, 80s arcade meets Salvador Dalí, synthwave nightmare fuel",
-            "Bizarro world romance: {scene}, everyone's reflection shows a different person, food floats and talks, shadows are neon colored, reality cracks like broken glass, Tim Burton meets Studio Ghibli on acid, ultra detailed surrealism",
-            "Glitch in the matrix: {scene}, reality pixelating and corrupting, people stuck in time loops mid-motion, objects duplicating infinitely, VHS tracking errors as visual style, cyberpunk meets fever dream, maximum visual chaos"
+            "Surrealist nightmare masterpiece: {scene}, objects melting like Salvador Dali clocks, impossible M.C. Escher geometry defying physics, neon pink and electric blue lightning bolts, fish wearing tuxedos swimming through mid-air, the moon is a giant screaming emoji face, everything dripping with liquid gold honey, hyper-detailed maximum chaos, 8K dreamscape horror, reality is completely broken and beautiful",
+            "Fever dream aesthetic explosion: {scene}, everything made of melting candy and shiny chrome, gravity working in six different directions simultaneously, people with kaleidoscope heads, ceiling is actually an ocean with whales, raining diamonds and floating eyeballs, vaporwave color palette nightmare, maximum absurdity overload, ultra detailed insanity",
+            "Psychedelic dating apocalypse: {scene}, fractal patterns consuming the entire scene, faces splitting into infinite kaleidoscope reflections, wine glasses transform into swirling purple galaxies, furniture comes alive with googly cartoon eyes, 1980s arcade neon aesthetic meets Salvador Dali on acid trip, synthwave color palette nightmare fuel, ultra detailed visual chaos",
+            "Bizarro dimension romance gone wrong: {scene}, every mirror shows a completely different screaming person, food floats and has conversations, shadows are hot pink and neon green, reality cracks like shattered glass revealing the cosmic void, Tim Burton directing Studio Ghibli while on mushrooms, maximum visual absurdity explosion, 8K surrealism masterpiece",
+            "Glitch in reality matrix malfunction: {scene}, world pixelating and corrupting before your eyes, people frozen in time loops mid-motion repeating forever, objects duplicating into infinity spiral, VHS tracking errors as visual aesthetic style, cyberpunk dystopia meets mushroom trip hallucination, pure visual chaos overload maximum detail"
         ];
 
         let currentChapter = null;
         let currentImagePrompt = "";
-        let selectedImage = null;
-        let selectedVideoPrompt = null;
+        let generatedImages = [];
 
         // Tab switching
         function switchTab(tab) {
@@ -893,34 +881,12 @@
             } else {
                 document.querySelector('.tab-btn:last-child').classList.add('active');
                 document.getElementById('tab-video').classList.add('active');
+                updateVideoTab();
             }
         }
 
-        // Settings
-        function saveSettings() {
-            localStorage.setItem('replicateToken', document.getElementById('apiToken').value);
-            localStorage.setItem('backendUrl', document.getElementById('backendUrl').value);
-            alert('✅ הגדרות נשמרו!');
-        }
-
-        function loadSettings() {
-            const token = localStorage.getItem('replicateToken');
-            const url = localStorage.getItem('backendUrl');
-            if (token) document.getElementById('apiToken').value = token;
-            if (url) document.getElementById('backendUrl').value = url;
-        }
-
-        function testConnection() {
-            const btn = document.getElementById('statusBtn');
-            btn.innerHTML = '<span class="loading"></span> בודק...';
-            setTimeout(() => {
-                btn.innerHTML = '✅ מחובר';
-                btn.classList.add('btn-success');
-            }, 1500);
-        }
-
-        // Generate image
-        function generateImage() {
+        // Generate image with Pollinations.ai (FREE!)
+        async function generateImage() {
             // Select random chapter
             currentChapter = chapters[Math.floor(Math.random() * chapters.length)];
             
@@ -936,33 +902,63 @@
             // Show prompt card
             document.getElementById('imagePromptCard').style.display = 'block';
             
+            // Show loading
+            document.getElementById('loadingCard').style.display = 'block';
+            document.getElementById('imageResultCard').style.display = 'none';
+            
             // Update status
             document.getElementById('statusReady').textContent = 'יוצר...';
             document.getElementById('statusReady').classList.remove('ready');
             document.getElementById('statusReady').classList.add('pending');
             
-            // Scroll to chapter
-            document.getElementById('chapterCard').scrollIntoView({ behavior: 'smooth' });
+            // Scroll to loading
+            document.getElementById('loadingCard').scrollIntoView({ behavior: 'smooth' });
+            
+            // Generate with Pollinations.ai
+            try {
+                const encodedPrompt = encodeURIComponent(currentImagePrompt);
+                const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${Date.now()}`;
+                
+                // Preload image
+                const img = new Image();
+                img.onload = function() {
+                    document.getElementById('loadingCard').style.display = 'none';
+                    document.getElementById('generatedImage').src = imageUrl;
+                    document.getElementById('imageResultCard').style.display = 'block';
+                    document.getElementById('statusReady').textContent = 'מוכן!';
+                    document.getElementById('statusReady').classList.add('ready');
+                    document.getElementById('statusReady').classList.remove('pending');
+                    document.getElementById('statusImage').textContent = '✅';
+                    
+                    // Save to history
+                    generatedImages.push({
+                        url: imageUrl,
+                        chapter: currentChapter,
+                        prompt: currentImagePrompt
+                    });
+                    
+                    // Scroll to result
+                    document.getElementById('imageResultCard').scrollIntoView({ behavior: 'smooth' });
+                };
+                img.onerror = function() {
+                    document.getElementById('loadingCard').style.display = 'none';
+                    alert('❌ שגיאה ביצירת התמונה. נסה שוב!');
+                };
+                img.src = imageUrl;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loadingCard').style.display = 'none';
+                alert('❌ שגיאה: ' + error.message);
+            }
         }
 
         function regeneratePrompt() {
+            if (!currentChapter) return;
             const style = crazyPromptStyles[Math.floor(Math.random() * crazyPromptStyles.length)];
-            const scene = `Dating scene inspired by "${currentChapter.he}" - ${currentChapter.en}`;
+            const scene = `Chaotic dating disaster scene: "${currentChapter.hook}" - a surreal moment from a terrible date, ${currentChapter.en}`;
             currentImagePrompt = style.replace('{scene}', scene);
             document.getElementById('imagePrompt').textContent = currentImagePrompt;
-        }
-
-        function generateWithReplicate() {
-            alert('🚀 פותח Replicate עם הפרומפט...\n\nבגרסה הבאה - יצירה אוטומטית!');
-            
-            // Simulate image generation
-            setTimeout(() => {
-                document.getElementById('imageResultCard').style.display = 'block';
-                document.getElementById('generatedImage').src = 'https://via.placeholder.com/800x600/1a1a2e/9b59b6?text=Generated+Image';
-                document.getElementById('statusReady').textContent = 'מוכן!';
-                document.getElementById('statusReady').classList.add('ready');
-                document.getElementById('statusReady').classList.remove('pending');
-            }, 2000);
         }
 
         function downloadImage() {
@@ -970,8 +966,9 @@
             const link = document.createElement('a');
             link.href = img.src;
             link.download = `funnydates-chapter-${currentChapter?.num || 'image'}-${Date.now()}.png`;
+            link.target = '_blank';
             link.click();
-            alert('💾 התמונה הורדה ל-Downloads!');
+            alert('💾 התמונה נפתחת בחלון חדש - לחץ ימני ושמור!');
         }
 
         // Copy functions
@@ -990,36 +987,96 @@
         }
 
         // Video tab functions
-        function selectImage(num) {
-            document.querySelectorAll('.image-option').forEach(opt => opt.classList.remove('selected'));
-            document.querySelectorAll('.image-option')[num - 1].classList.add('selected');
-            selectedImage = num;
-            
-            if (num === 3) {
-                switchTab('images');
+        function updateVideoTab() {
+            const selector = document.getElementById('imageSelector');
+            if (generatedImages.length === 0) {
+                selector.innerHTML = `
+                    <div class="image-option" onclick="switchTab('images')">
+                        <div class="image-placeholder">➕</div>
+                        <div>צור תמונה חדשה</div>
+                        <small style="color: var(--text-secondary);">עבור לטאב תמונות</small>
+                    </div>
+                `;
+            } else {
+                selector.innerHTML = generatedImages.slice(-3).map((img, idx) => `
+                    <div class="image-option" onclick="selectImage(${idx})">
+                        <img src="${img.url}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
+                        <div>פרק ${img.chapter.num}</div>
+                        <small style="color: var(--text-secondary)">${img.chapter.he}</small>
+                    </div>
+                `).join('') + `
+                    <div class="image-option" onclick="switchTab('images')">
+                        <div class="image-placeholder">➕</div>
+                        <div>צור תמונה חדשה</div>
+                    </div>
+                `;
             }
         }
 
-        function selectVideoPrompt(num) {
+        let selectedImageIdx = null;
+        let selectedVideoStyle = null;
+
+        function selectImage(idx) {
+            document.querySelectorAll('.image-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.image-option')[idx].classList.add('selected');
+            selectedImageIdx = idx;
+            
+            // Update video prompts based on selected image
+            if (generatedImages[idx]) {
+                updateVideoPrompts(generatedImages[idx].chapter);
+            }
+        }
+
+        function updateVideoPrompts(chapter) {
+            const container = document.getElementById('videoPromptsContainer');
+            const prompts = [
+                {
+                    name: "🌀 סוריאליסטי/חלומי",
+                    text: `Dreamlike slow motion sequence, surreal dating disaster inspired by "${chapter.hook}", objects float and melt in zero gravity, camera slowly orbits the chaos with smooth dolly movement, ethereal fog wisps throughout, dramatic lighting shifts from hot pink to electric blue to gold, time feels stretched and warped, 4K cinematic masterpiece quality, hypnotic and mesmerizing atmosphere`
+                },
+                {
+                    name: "💥 דרמטי/אקשן",
+                    text: `Fast-paced explosive action sequence, dramatic moment from "${chapter.hook}", impact with flying debris everywhere, glass shatters in ultra slow-motion then snaps to hyperspeed, intense camera shake and movement, rapid cuts between angles, neon lights flashing frantically, pure adrenaline energy throughout, music video directing style, hyper-dynamic movement`
+                },
+                {
+                    name: "🎭 קומי/מצחיק",
+                    text: `Perfect comedy timing sequence, funny dating disaster "${chapter.hook}", exaggerated cartoon physics throughout, faces react in dramatic slow-mo surprise, objects bounce with sitcom energy, sparkles and emoji float through scene, playful whip-pan camera movements, feel-good comedy vibes, like a viral TikTok comedy skit`
+                }
+            ];
+            
+            container.innerHTML = prompts.map((p, idx) => `
+                <div class="video-prompt-option" onclick="selectVideoPrompt(${idx})">
+                    <div class="prompt-option-header">
+                        <span class="prompt-option-number">${idx + 1}</span>
+                        <span class="prompt-option-style">${p.name}</span>
+                    </div>
+                    <p class="prompt-text" id="videoPrompt${idx}">${p.text}</p>
+                    <button class="copy-btn" onclick="copyPrompt('videoPrompt${idx}'); event.stopPropagation();">📋</button>
+                </div>
+            `).join('');
+            
+            // Update descriptions
+            document.getElementById('descHe').textContent = `${chapter.he} 😂 #דייטים #סיפורים_מטורפים #101דייטים #funnydates`;
+            document.getElementById('descEn').textContent = `${chapter.hook} 😂 #dating #crazystories #lovebites101 #funnydates`;
+        }
+
+        function selectVideoPrompt(idx) {
             document.querySelectorAll('.video-prompt-option').forEach(opt => opt.classList.remove('selected'));
-            document.querySelectorAll('.video-prompt-option')[num - 1].classList.add('selected');
-            selectedVideoPrompt = num;
+            document.querySelectorAll('.video-prompt-option')[idx].classList.add('selected');
+            selectedVideoStyle = idx;
         }
 
         function copyAllForPixVerse() {
-            if (!selectedVideoPrompt) {
+            if (selectedVideoStyle === null) {
                 alert('⚠️ בחר סגנון וידאו קודם!');
                 return;
             }
             
-            const prompt = document.getElementById(`videoPrompt${selectedVideoPrompt}`).textContent;
+            const prompt = document.getElementById(`videoPrompt${selectedVideoStyle}`).textContent;
             navigator.clipboard.writeText(prompt).then(() => {
-                alert('✅ הפרומפט הועתק!\n\n📌 כעת:\n1. פתח את Pix Verse\n2. העלה את התמונה\n3. הדבק את הפרומפט\n4. צור וידאו מדהים!');
+                alert('✅ הפרומפט הועתק!\\n\\n📌 כעת:\\n1. פתח את Pix Verse\\n2. העלה את התמונה\\n3. הדבק את הפרומפט\\n4. צור וידאו מדהים!');
             });
         }
-
-        // Initialize
-        loadSettings();
     </script>
 </body>
 </html>
