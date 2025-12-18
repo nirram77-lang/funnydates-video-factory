@@ -700,9 +700,9 @@
 
             <!-- Image Prompt -->
             <div class="card" id="imagePromptCard" style="display: none;">
-                <h2 class="card-title">🎨 פרומפט לתמונה (ביזארי/סוריאליסטי)</h2>
+                <h2 class="card-title">🎬 פרומפט לתמונה (ריאליסטי + ביזארי)</h2>
                 <div class="prompt-box">
-                    <span class="prompt-label">Image Prompt - CRAZY MODE 🤪</span>
+                    <span class="prompt-label">Image Prompt - REALISTIC BIZARRE 🎬</span>
                     <button class="copy-btn" onclick="copyPrompt('imagePrompt')">📋 העתק</button>
                     <p class="prompt-text" id="imagePrompt">
                         Surrealist dating nightmare: A giant stiletto heel the size of a building crushes a romantic dinner table, wine glasses floating in zero gravity, the man's face melting like Dalí clock, woman made entirely of disco balls, neon pink and electric blue lighting, fish swimming through the air wearing tuxedos, the moon is actually a giant emoji, everything dripping with gold honey, hyper-detailed chaos, 8K nightmare fuel, Salvador Dalí meets Las Vegas fever dream
@@ -843,27 +843,27 @@
     </div>
 
     <script>
-        // Chapters data
+        // Chapters data with specific bizarre scenarios
         const chapters = [
-            { num: 1, he: "הדייט הראשון שהפך לסיוט", en: "First date nightmare", hook: "When I thought it couldn't get worse" },
-            { num: 2, he: "כשהקינוח התפוצץ", en: "When dessert exploded", hook: "The souffle flew straight to his face" },
-            { num: 3, he: "הנעל שגנבה את ההצגה", en: "Her shoe won the date", hook: "Her stiletto became the star of the evening" },
-            { num: 4, he: "המלצר שהתאהב", en: "The waiter who fell in love", hook: "He brought his number instead of the bill" },
-            { num: 5, he: "הטלפון שלא הפסיק לצלצל", en: "The phone that never stopped", hook: "47 calls from my ex during dinner" },
-            { num: 6, he: "הגשם שהציל את הערב", en: "The rain that saved the night", hook: "Rain ruined my dress but saved me from a kiss" },
-            { num: 7, he: "הספגטי המפתיע", en: "The surprising spaghetti", hook: "Spaghetti landed on his white designer shirt" },
-            { num: 8, he: "כשהכלב ברח עם הארנק", en: "When the dog stole the wallet", hook: "His cute dog ran away with my purse" },
-            { num: 9, he: "המפגש המביך במעלית", en: "Elevator awkwardness", hook: "Stuck in elevator with my ex boyfriend" },
-            { num: 10, he: "הסוד שנחשף בטעות", en: "The secret that slipped", hook: "He called me by his ex girlfriend name" },
+            { num: 1, he: "הדייט הראשון שהפך לסיוט", en: "First date nightmare", scene: "A realistic restaurant date scene, the man suddenly has spaghetti exploding from his nose like a fountain, the woman looks shocked with wine glass frozen mid-air, other diners staring in disbelief, photorealistic style, cinematic lighting, dramatic moment" },
+            { num: 2, he: "כשהקינוח התפוצץ", en: "When dessert exploded", scene: "Elegant restaurant, chocolate souffle literally exploding like a volcano covering the man's expensive white suit, the woman trying not to laugh, waiter in background dropping his tray in shock, hyper-realistic photography style, perfect lighting" },
+            { num: 3, he: "הנעל שגנבה את ההצגה", en: "Her shoe won the date", scene: "Romantic candlelit dinner, woman's high heel shoe has come alive with cartoon eyes and is drinking from the wine glass, the couple staring at it in complete shock, surreal but photorealistic, cinematic composition" },
+            { num: 4, he: "המלצר שהתאהב", en: "The waiter who fell in love", scene: "Restaurant scene, waiter on his knees proposing to the woman while her actual date sits there confused and angry, rose petals falling, other staff watching, photorealistic dramatic moment, movie scene quality" },
+            { num: 5, he: "הטלפון שלא הפסיק לצלצל", en: "The phone that never stopped", scene: "Romantic dinner, the man has 47 phones all ringing at once stacked on the table, the woman looking extremely annoyed, phones literally overflowing, photorealistic absurd comedy, bright restaurant lighting" },
+            { num: 6, he: "הגשם שהציל את הערב", en: "The rain that saved the night", scene: "Couple at outdoor restaurant, a tiny rain cloud ONLY above the man soaking just him, woman perfectly dry laughing, surreal but photorealistic style, dramatic contrast lighting" },
+            { num: 7, he: "הספגטי המפתיע", en: "The surprising spaghetti", scene: "Italian restaurant date, the spaghetti on the plate has formed into the shape of the woman's ex-boyfriend's face, both staring at it horrified, ultra realistic food photography meets horror" },
+            { num: 8, he: "כשהכלב ברח עם הארנק", en: "When the dog stole the wallet", scene: "Outdoor cafe date, a golden retriever running away in the background with a designer purse in mouth looking back mischievously, couple chasing, frozen action moment, photorealistic comedy" },
+            { num: 9, he: "המפגש המביך במעלית", en: "Elevator awkwardness", scene: "Cramped elevator, woman stuck between her current date and her ex-boyfriend, extreme awkward tension visible on all faces, photorealistic, dramatic overhead lighting, comedy of errors" },
+            { num: 10, he: "הסוד שנחשף בטעות", en: "The secret that slipped", scene: "Fancy restaurant, man with speech bubble showing wrong woman's name, his date's face transitioning from happy to furious, wine glass cracking from her grip, photorealistic dramatic moment" },
         ];
 
-        // Crazy image prompts templates - SURREALIST MODE
-        const crazyPromptStyles = [
-            "Surrealist nightmare masterpiece: {scene}, objects melting like Salvador Dali clocks, impossible M.C. Escher geometry defying physics, neon pink and electric blue lightning bolts, fish wearing tuxedos swimming through mid-air, the moon is a giant screaming emoji face, everything dripping with liquid gold honey, hyper-detailed maximum chaos, 8K dreamscape horror, reality is completely broken and beautiful",
-            "Fever dream aesthetic explosion: {scene}, everything made of melting candy and shiny chrome, gravity working in six different directions simultaneously, people with kaleidoscope heads, ceiling is actually an ocean with whales, raining diamonds and floating eyeballs, vaporwave color palette nightmare, maximum absurdity overload, ultra detailed insanity",
-            "Psychedelic dating apocalypse: {scene}, fractal patterns consuming the entire scene, faces splitting into infinite kaleidoscope reflections, wine glasses transform into swirling purple galaxies, furniture comes alive with googly cartoon eyes, 1980s arcade neon aesthetic meets Salvador Dali on acid trip, synthwave color palette nightmare fuel, ultra detailed visual chaos",
-            "Bizarro dimension romance gone wrong: {scene}, every mirror shows a completely different screaming person, food floats and has conversations, shadows are hot pink and neon green, reality cracks like shattered glass revealing the cosmic void, Tim Burton directing Studio Ghibli while on mushrooms, maximum visual absurdity explosion, 8K surrealism masterpiece",
-            "Glitch in reality matrix malfunction: {scene}, world pixelating and corrupting before your eyes, people frozen in time loops mid-motion repeating forever, objects duplicating into infinity spiral, VHS tracking errors as visual aesthetic style, cyberpunk dystopia meets mushroom trip hallucination, pure visual chaos overload maximum detail"
+        // Prompt enhancers for maximum bizarre but realistic effect
+        const styleEnhancers = [
+            "Ultra photorealistic, 8K quality, cinematic movie scene, dramatic lighting, professional photography, viral social media worthy, the moment right before disaster, faces showing genuine emotion",
+            "Hyper-realistic photography style, studio lighting, sharp focus, viral meme potential, awkward moment captured perfectly, expressions tell the whole story, magazine quality",
+            "Photorealistic digital art, cinematic composition, golden hour lighting, the exact moment of realization, genuine human reactions, could be a movie poster, ultra detailed faces",
+            "Professional photography quality, perfect timing capture, dramatic shadows, genuine shock and surprise on faces, storytelling through image, viral content style",
+            "Ultra realistic rendering, film still quality, expressive faces, comedy timing frozen in time, the moment everything went wrong, instagram-worthy disaster"
         ];
 
         let currentChapter = null;
@@ -917,11 +917,21 @@
             // Generate with Pollinations.ai
             try {
                 const encodedPrompt = encodeURIComponent(currentImagePrompt);
-                const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${Date.now()}`;
+                const seed = Math.floor(Math.random() * 1000000);
+                const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${seed}`;
+                
+                // Set timeout for 45 seconds
+                const timeoutId = setTimeout(() => {
+                    document.getElementById('loadingCard').style.display = 'none';
+                    if (!document.getElementById('generatedImage').src) {
+                        alert('⏱️ הטעינה לוקחת יותר מדי זמן.\n\nנסה:\n1. לחץ "פרומפט אחר"\n2. נסה שוב');
+                    }
+                }, 45000);
                 
                 // Preload image
                 const img = new Image();
                 img.onload = function() {
+                    clearTimeout(timeoutId);
                     document.getElementById('loadingCard').style.display = 'none';
                     document.getElementById('generatedImage').src = imageUrl;
                     document.getElementById('imageResultCard').style.display = 'block';
@@ -941,8 +951,9 @@
                     document.getElementById('imageResultCard').scrollIntoView({ behavior: 'smooth' });
                 };
                 img.onerror = function() {
+                    clearTimeout(timeoutId);
                     document.getElementById('loadingCard').style.display = 'none';
-                    alert('❌ שגיאה ביצירת התמונה. נסה שוב!');
+                    alert('❌ שגיאה ביצירת התמונה.\n\nנסה:\n1. לחץ "פרומפט אחר"\n2. נסה שוב');
                 };
                 img.src = imageUrl;
                 
@@ -955,9 +966,8 @@
 
         function regeneratePrompt() {
             if (!currentChapter) return;
-            const style = crazyPromptStyles[Math.floor(Math.random() * crazyPromptStyles.length)];
-            const scene = `Chaotic dating disaster scene: "${currentChapter.hook}" - a surreal moment from a terrible date, ${currentChapter.en}`;
-            currentImagePrompt = style.replace('{scene}', scene);
+            const enhancer = styleEnhancers[Math.floor(Math.random() * styleEnhancers.length)];
+            currentImagePrompt = `${currentChapter.scene}, ${enhancer}`;
             document.getElementById('imagePrompt').textContent = currentImagePrompt;
         }
 
@@ -1031,16 +1041,16 @@
             const container = document.getElementById('videoPromptsContainer');
             const prompts = [
                 {
-                    name: "🌀 סוריאליסטי/חלומי",
-                    text: `Dreamlike slow motion sequence, surreal dating disaster inspired by "${chapter.hook}", objects float and melt in zero gravity, camera slowly orbits the chaos with smooth dolly movement, ethereal fog wisps throughout, dramatic lighting shifts from hot pink to electric blue to gold, time feels stretched and warped, 4K cinematic masterpiece quality, hypnotic and mesmerizing atmosphere`
+                    name: "🎬 קולנועי/דרמטי",
+                    text: `Cinematic slow motion, camera slowly pushes in on the scene, dramatic orchestral music feeling, faces frozen in the moment of realization, shallow depth of field, film grain, movie trailer quality, emotional impact, 4K cinematic`
                 },
                 {
-                    name: "💥 דרמטי/אקשן",
-                    text: `Fast-paced explosive action sequence, dramatic moment from "${chapter.hook}", impact with flying debris everywhere, glass shatters in ultra slow-motion then snaps to hyperspeed, intense camera shake and movement, rapid cuts between angles, neon lights flashing frantically, pure adrenaline energy throughout, music video directing style, hyper-dynamic movement`
+                    name: "😂 קומדיה/מצחיק",
+                    text: `Comedy timing, quick zoom on shocked faces, sitcom style camera work, reaction shots, perfect comedic pause, bright cheerful lighting despite disaster, upbeat energy, TikTok viral style, funny moment captured`
                 },
                 {
-                    name: "🎭 קומי/מצחיק",
-                    text: `Perfect comedy timing sequence, funny dating disaster "${chapter.hook}", exaggerated cartoon physics throughout, faces react in dramatic slow-mo surprise, objects bounce with sitcom energy, sparkles and emoji float through scene, playful whip-pan camera movements, feel-good comedy vibes, like a viral TikTok comedy skit`
+                    name: "📱 וויראלי/סושיאל",
+                    text: `Social media viral style, POV camera angle, shaky realistic footage, reaction video quality, "you won't believe what happened" energy, authentic moment captured, Instagram Reels style, relatable disaster`
                 }
             ];
             
@@ -1056,8 +1066,8 @@
             `).join('');
             
             // Update descriptions
-            document.getElementById('descHe').textContent = `${chapter.he} 😂 #דייטים #סיפורים_מטורפים #101דייטים #funnydates`;
-            document.getElementById('descEn').textContent = `${chapter.hook} 😂 #dating #crazystories #lovebites101 #funnydates`;
+            document.getElementById('descHe').textContent = `${chapter.he} 😂 #דייטים #סיפורים_מטורפים #101דייטים #funnydates #מה_ראיתי_עכשיו`;
+            document.getElementById('descEn').textContent = `${chapter.en} 😂 #dating #datingfail #wtf #viral #funnydates`;
         }
 
         function selectVideoPrompt(idx) {
